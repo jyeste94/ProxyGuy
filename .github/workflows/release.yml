@@ -1,0 +1,37 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*' 
+
+permissions:
+  contents: write  
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Publish app
+        run: dotnet publish ./ProxyGuy.WinForms.csproj -c Release -r win-x64 --self-contained false -o ./publish
+      - name: Compress output
+        run: |
+          powershell Compress-Archive -Path ./publish/* -DestinationPath ./ProxyGuy.WinForms.zip
+      - name: Upload executable
+        uses: actions/upload-artifact@v3
+        with:
+          name: ProxyGuy.WinForms.exe
+          path: ./publish/ProxyGuy.WinForms.exe
+      - name: Upload zip
+        uses: actions/upload-artifact@v3
+        with:
+          name: ProxyGuy.WinForms.zip
+          path: ./ProxyGuy.WinForms.zip
