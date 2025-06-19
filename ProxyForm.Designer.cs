@@ -15,6 +15,7 @@ namespace ProxyGuy.WinForms
         private ComboBox comboMethodFilter;
         private ComboBox comboStatusFilter;
         private Button btnToggleProxy;
+        private Button btnClearLogs;
         private ListBox listDomains;
         private TabControl tabsHeaders;
 
@@ -38,6 +39,7 @@ namespace ProxyGuy.WinForms
             this.comboMethodFilter = new System.Windows.Forms.ComboBox();
             this.comboStatusFilter = new System.Windows.Forms.ComboBox();
             this.btnToggleProxy = new System.Windows.Forms.Button();
+            this.btnClearLogs = new System.Windows.Forms.Button();
             this.listDomains = new System.Windows.Forms.ListBox();
             this.tabsHeaders = new System.Windows.Forms.TabControl();
             var tabPageRequest = new System.Windows.Forms.TabPage();
@@ -175,6 +177,17 @@ namespace ProxyGuy.WinForms
             this.btnToggleProxy.Click += new System.EventHandler(this.btnToggleProxy_Click);
 
             //
+            // btnClearLogs
+            //
+            this.btnClearLogs.Location = new System.Drawing.Point(504, 6);
+            this.btnClearLogs.Name = "btnClearLogs";
+            this.btnClearLogs.Size = new System.Drawing.Size(120, 23);
+            this.btnClearLogs.TabIndex = 6;
+            this.btnClearLogs.Text = "Limpiar Logs";
+            this.btnClearLogs.UseVisualStyleBackColor = true;
+            this.btnClearLogs.Click += new System.EventHandler(this.btnClearLogs_Click);
+
+            //
             // comboMethodFilter
             //
             this.comboMethodFilter.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -201,6 +214,7 @@ namespace ProxyGuy.WinForms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnClearLogs);
             this.Controls.Add(this.btnToggleProxy);
             this.Controls.Add(this.comboStatusFilter);
             this.Controls.Add(this.comboMethodFilter);

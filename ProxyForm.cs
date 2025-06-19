@@ -12,6 +12,17 @@ namespace ProxyGuy.WinForms
         private string _methodFilter = "All";
         private string _statusFilter = "All";
         private bool _proxyEnabled = false;
+        private void btnClearLogs_Click(object sender, EventArgs e)
+        {
+            _domainRequests.Clear();
+            _displayRequests.Clear();
+            listDomains.Items.Clear();
+            gridRequests.Rows.Clear();
+            gridRequestHeaders.Rows.Clear();
+            gridResponseHeaders.Rows.Clear();
+            txtRequestBody.Clear();
+            txtResponseBody.Clear();
+        }
 
         private void gridRequests_SelectionChanged(object sender, EventArgs e)
         {
