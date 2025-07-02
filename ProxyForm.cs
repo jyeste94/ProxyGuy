@@ -187,5 +187,46 @@ namespace ProxyGuy.WinForms
                 AddRequestToGrid(r);
             }
         }
+
+        private void gridRequests_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            if (gridRequests.Columns[e.ColumnIndex].Name == "ColumnActions")
+            {
+                if (gridRequests.Rows[e.RowIndex].Tag is RequestInfo info)
+                {
+                    using var sfd = new SaveFileDialog();
+                    sfd.Filter = "HTTP Request|*.txt|All files|*.*";
+                    sfd.FileName = "request.txt";
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        var sb = new System.Text.StringBuilder();
+                        sb.AppendLine($"{info.Method} {info.Url} HTTP/1.1");
+                        foreach (var h in info.RequestHeaders)
+                        {
+                            sb.AppendLine($"{h.Key}: {h.Value}");
+                        }
+                        sb.AppendLine();
+                        if (!string.IsNullOrEmpty(info.RequestBody))
+                        {
+                            sb.AppendLine(info.RequestBody);
+                        }
+
+                        sb.AppendLine();
+                        sb.AppendLine($"HTTP/1.1 {info.StatusCode}");
+                        foreach (var h in info.ResponseHeaders)
+                        {
+                            sb.AppendLine($"{h.Key}: {h.Value}");
+                        }
+                        sb.AppendLine();
+                        if (!string.IsNullOrEmpty(info.ResponseBody))
+                        {
+                            sb.AppendLine(info.ResponseBody);
+                        }
+                        System.IO.File.WriteAllText(sfd.FileName, sb.ToString());
+                    }
+                }
+            }
+        }
     }
 }

@@ -61,13 +61,15 @@ namespace ProxyGuy.WinForms
                 new DataGridViewTextBoxColumn { HeaderText = "Hora", Name = "ColumnTime", Width = 80 },
                 new DataGridViewTextBoxColumn { HeaderText = "Método", Name = "ColumnMethod", Width = 70 },
                 new DataGridViewTextBoxColumn { HeaderText = "URL", Name = "ColumnUrl", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill },
-                new DataGridViewTextBoxColumn { HeaderText = "Status", Name = "ColumnStatus", Width = 60 }
+                new DataGridViewTextBoxColumn { HeaderText = "Status", Name = "ColumnStatus", Width = 60 },
+                new DataGridViewButtonColumn { HeaderText = "Acciones", Name = "ColumnActions", Text = "Descargar", UseColumnTextForButtonValue = true, Width = 80 }
             });
             this.gridRequests.Location = new System.Drawing.Point(200, 35);
             this.gridRequests.Name = "gridRequests";
             this.gridRequests.Size = new System.Drawing.Size(588, 215);
             this.gridRequests.TabIndex = 0;
             this.gridRequests.SelectionChanged += new System.EventHandler(this.gridRequests_SelectionChanged);
+            this.gridRequests.CellContentClick += new DataGridViewCellEventHandler(this.gridRequests_CellContentClick);
 
             //
             // txtDomainFilter
@@ -255,7 +257,7 @@ namespace ProxyGuy.WinForms
 
             if (FilterRequest(info))
             {
-                int rowIndex = gridRequests.Rows.Add(info.Time.ToString("HH:mm:ss"), info.Method, info.Url, info.StatusCode);
+                int rowIndex = gridRequests.Rows.Add(info.Time.ToString("HH:mm:ss"), info.Method, info.Url, info.StatusCode, "Descargar");
                 gridRequests.Rows[rowIndex].Tag = info;
             }
         }
