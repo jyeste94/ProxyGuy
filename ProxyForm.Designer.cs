@@ -16,6 +16,7 @@ namespace ProxyGuy.WinForms
         private ComboBox comboStatusFilter;
         private Button btnToggleProxy;
         private Button btnClearLogs;
+        private CheckBox checkUpdatePhpIni;
         private ListBox listDomains;
         private TabControl tabsHeaders;
 
@@ -40,6 +41,7 @@ namespace ProxyGuy.WinForms
             this.comboStatusFilter = new System.Windows.Forms.ComboBox();
             this.btnToggleProxy = new System.Windows.Forms.Button();
             this.btnClearLogs = new System.Windows.Forms.Button();
+            this.checkUpdatePhpIni = new System.Windows.Forms.CheckBox();
             this.listDomains = new System.Windows.Forms.ListBox();
             this.tabsHeaders = new System.Windows.Forms.TabControl();
             var tabPageRequest = new System.Windows.Forms.TabPage();
@@ -188,6 +190,16 @@ namespace ProxyGuy.WinForms
             this.btnClearLogs.Click += new System.EventHandler(this.btnClearLogs_Click);
 
             //
+            // checkUpdatePhpIni
+            //
+            this.checkUpdatePhpIni.Location = new System.Drawing.Point(630, 8);
+            this.checkUpdatePhpIni.Name = "checkUpdatePhpIni";
+            this.checkUpdatePhpIni.Size = new System.Drawing.Size(160, 17);
+            this.checkUpdatePhpIni.TabIndex = 7;
+            this.checkUpdatePhpIni.Text = "Actualizar php.ini";
+            this.checkUpdatePhpIni.UseVisualStyleBackColor = true;
+
+            //
             // comboMethodFilter
             //
             this.comboMethodFilter.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -215,6 +227,7 @@ namespace ProxyGuy.WinForms
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.btnClearLogs);
+            this.Controls.Add(this.checkUpdatePhpIni);
             this.Controls.Add(this.btnToggleProxy);
             this.Controls.Add(this.comboStatusFilter);
             this.Controls.Add(this.comboMethodFilter);

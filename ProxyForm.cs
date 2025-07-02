@@ -12,6 +12,7 @@ namespace ProxyGuy.WinForms
         private string _methodFilter = "All";
         private string _statusFilter = "All";
         private bool _proxyEnabled = false;
+        private bool _phpIniModified = false;
         private void btnClearLogs_Click(object sender, EventArgs e)
         {
             _domainRequests.Clear();
@@ -106,6 +107,11 @@ namespace ProxyGuy.WinForms
             {
                 WindowsProxyHelper.Disable();
             }
+            if (_phpIniModified)
+            {
+                PhpIniHelper.RestorePhpConfiguration();
+                _phpIniModified = false;
+            }
         }
 
         private void btnToggleProxy_Click(object sender, EventArgs e)
@@ -113,12 +119,23 @@ namespace ProxyGuy.WinForms
             if (!_proxyEnabled)
             {
                 WindowsProxyHelper.Enable("127.0.0.1", 8080);
+                if (checkUpdatePhpIni.Checked)
+                {
+                    string pem = CertificateHelper.ExportRootCertificatePem(_proxy.Server);
+                    PhpIniHelper.ConfigurePhpCertificate(pem);
+                    _phpIniModified = true;
+                }
                 btnToggleProxy.Text = "Desactivar Proxy";
                 _proxyEnabled = true;
             }
             else
             {
                 WindowsProxyHelper.Disable();
+                if (_phpIniModified)
+                {
+                    PhpIniHelper.RestorePhpConfiguration();
+                    _phpIniModified = false;
+                }
                 btnToggleProxy.Text = "Activar Proxy";
                 _proxyEnabled = false;
             }
