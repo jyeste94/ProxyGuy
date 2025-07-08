@@ -12,7 +12,12 @@ namespace ProxyGuy.WinForms
     {
         public static void ConfigurePhpCertificate(string pemPath)
         {
-            foreach (var ini in GetPhpIniFiles())
+            ConfigurePhpCertificate(pemPath, GetPhpIniFiles());
+        }
+
+        public static void ConfigurePhpCertificate(string pemPath, IEnumerable<string> iniFiles)
+        {
+            foreach (var ini in iniFiles)
             {
                 try
                 {
@@ -27,7 +32,12 @@ namespace ProxyGuy.WinForms
 
         public static void RestorePhpConfiguration()
         {
-            foreach (var ini in GetPhpIniFiles())
+            RestorePhpConfiguration(GetPhpIniFiles());
+        }
+
+        public static void RestorePhpConfiguration(IEnumerable<string> iniFiles)
+        {
+            foreach (var ini in iniFiles)
             {
                 var backup = ini + ".proxyguy.bak";
                 try

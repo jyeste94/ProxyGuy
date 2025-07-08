@@ -4,10 +4,11 @@ ProxyGuy es una aplicación de escritorio basada en Windows Forms que actúa com
 
 ## Características principales
 
-- Inicia un servidor proxy en `localhost:8080` y muestra en una tabla todas las peticiones y respuestas interceptadas.
+- Inicia un servidor proxy en `localhost:9090` y muestra en una tabla todas las peticiones y respuestas interceptadas.
 - Guarda las cabeceras de la petición y respuesta, así como los cuerpos cuando están disponibles.
 - Permite filtrar por dominio y habilitar o deshabilitar la configuración de proxy de Windows desde la interfaz.
 - Instala un certificado raíz auto generado para poder interceptar conexiones HTTPS (se realiza automáticamente al iniciar la aplicación).
+- Incluye un botón para configurar las rutas de `php.ini` que se actualizarán al activar el proxy; si se modifican se restauran automáticamente al desactivarlo.
 
 ## Estructura del proyecto
 
@@ -20,7 +21,7 @@ Application.Run(new ProxyForm());
 El servicio de proxy se inicializa en `ProxyService.cs` creando un `ProxyServer` de Titanium.Web.Proxy:
 
 ```csharp
-var explicitEndPoint = new ExplicitProxyEndPoint(System.Net.IPAddress.Any, 8080, true);
+var explicitEndPoint = new ExplicitProxyEndPoint(System.Net.IPAddress.Any, 9090, true);
 _proxyServer.AddEndPoint(explicitEndPoint);
 _proxyServer.Start();
 ```
@@ -60,7 +61,7 @@ El ejecutable generado se puede distribuir y ejecutar en cualquier equipo con .N
 ## Uso
 
 1. Ejecuta `ProxyGuy.WinForms.exe`.
-2. Pulsa **Activar Proxy** para que Windows redirija el tráfico a `localhost:8080`.
+2. Pulsa **Activar Proxy** para que Windows redirija el tráfico a `localhost:9090`.
 3. Navega normalmente y observa cómo las peticiones aparecen en la interfaz.
 4. Pulsa **Desactivar Proxy** antes de cerrar la aplicación para restaurar la configuración original.
 

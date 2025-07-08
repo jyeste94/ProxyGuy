@@ -13,6 +13,7 @@ namespace ProxyGuy.WinForms
         private string _statusFilter = "All";
         private bool _proxyEnabled = false;
         private bool _phpIniModified = false;
+        private System.Collections.Generic.List<string> _phpIniPaths = new();
         private void btnClearLogs_Click(object sender, EventArgs e)
         {
             _domainRequests.Clear();
@@ -23,6 +24,15 @@ namespace ProxyGuy.WinForms
             gridResponseHeaders.Rows.Clear();
             txtRequestBody.Clear();
             txtResponseBody.Clear();
+        }
+
+        private void btnConfigurePhpIni_Click(object sender, EventArgs e)
+        {
+            using var dlg = new PhpIniPathsForm(_phpIniPaths);
+            if (dlg.ShowDialog(this) == DialogResult.OK)
+            {
+                _phpIniPaths = new System.Collections.Generic.List<string>(dlg.PhpIniPaths);
+            }
         }
 
         private void gridRequests_SelectionChanged(object sender, EventArgs e)
@@ -109,7 +119,10 @@ namespace ProxyGuy.WinForms
             }
             if (_phpIniModified)
             {
-                PhpIniHelper.RestorePhpConfiguration();
+                if (_phpIniPaths.Count > 0)
+                    PhpIniHelper.RestorePhpConfiguration(_phpIniPaths);
+                else
+                    PhpIniHelper.RestorePhpConfiguration();
                 _phpIniModified = false;
             }
         }
@@ -118,11 +131,11 @@ namespace ProxyGuy.WinForms
         {
             if (!_proxyEnabled)
             {
-                WindowsProxyHelper.Enable("127.0.0.1", 8080);
-                if (checkUpdatePhpIni.Checked)
+                WindowsProxyHelper.Enable("127.0.0.1", 9090);
+                if (_phpIniPaths.Count > 0)
                 {
                     string pem = CertificateHelper.ExportRootCertificatePem(_proxy.Server);
-                    PhpIniHelper.ConfigurePhpCertificate(pem);
+                    PhpIniHelper.ConfigurePhpCertificate(pem, _phpIniPaths);
                     _phpIniModified = true;
                 }
                 btnToggleProxy.Text = "Desactivar Proxy";
@@ -133,7 +146,10 @@ namespace ProxyGuy.WinForms
                 WindowsProxyHelper.Disable();
                 if (_phpIniModified)
                 {
-                    PhpIniHelper.RestorePhpConfiguration();
+                    if (_phpIniPaths.Count > 0)
+                        PhpIniHelper.RestorePhpConfiguration(_phpIniPaths);
+                    else
+                        PhpIniHelper.RestorePhpConfiguration();
                     _phpIniModified = false;
                 }
                 btnToggleProxy.Text = "Activar Proxy";

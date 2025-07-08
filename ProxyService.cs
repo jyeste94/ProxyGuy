@@ -23,7 +23,7 @@ namespace ProxyGuy.WinForms
 
         public async Task StartAsync()
         {
-            var explicitEndPoint = new ExplicitProxyEndPoint(System.Net.IPAddress.Any, 8080, true);
+            var explicitEndPoint = new ExplicitProxyEndPoint(System.Net.IPAddress.Any, 9090, true);
             _proxyServer.AddEndPoint(explicitEndPoint);
 
             _proxyServer.BeforeRequest += OnRequest;
