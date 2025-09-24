@@ -27,7 +27,7 @@ jobs:
         run: dotnet restore
 
       - name: Publish Windows build
-        run: dotnet publish ProxyGuyMAUI.csproj -c Release -f net8.0-windows10.0.19041.0 -r win10-x64 --self-contained false -p:PublishSingleFile=true -o artifacts/win
+        run: dotnet publish ProxyGuy.csproj -c Release -f net8.0-windows10.0.19041.0 -r win10-x64 --self-contained false -p:PublishSingleFile=true -o artifacts/win
 
       - name: Compress artifact
         run: |
@@ -44,3 +44,4 @@ jobs:
           prerelease: false
           files: |
             ProxyGuyMAUI-win10-x64.zip
+
