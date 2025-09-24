@@ -1,37 +1,43 @@
-name: Build & Release
+﻿name: Release on push
 
 on:
   push:
-    tags:
-      - 'v*.*.*' 
-
-permissions:
-  contents: write  
+    branches:
+      - main
 
 jobs:
-  build:
+  build-and-release:
     runs-on: windows-latest
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Setup .NET 6
-        uses: actions/setup-dotnet@v3
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: 8.0.x
+
       - name: Restore dependencies
         run: dotnet restore
-      - name: Publish app
-        run: dotnet publish ./ProxyGuy.WinForms.csproj -c Release -r win-x64 --self-contained false -o ./publish
-      - name: Compress output
+
+      - name: Publish Windows build
+        run: dotnet publish ProxyGuyMAUI.csproj -c Release -f net8.0-windows10.0.19041.0 -r win10-x64 --self-contained false -p:PublishSingleFile=true -o artifacts/win
+
+      - name: Compress artifact
         run: |
-          powershell Compress-Archive -Path ./publish/* -DestinationPath ./ProxyGuy.WinForms.zip
-      - name: Upload executable
-        uses: actions/upload-artifact@v3
+          Compress-Archive -Path artifacts/win/* -DestinationPath ProxyGuyMAUI-win10-x64.zip -Force
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: ProxyGuy.WinForms.exe
-          path: ./publish/ProxyGuy.WinForms.exe
-      - name: Upload zip
-        uses: actions/upload-artifact@v3
-        with:
-          name: ProxyGuy.WinForms.zip
-          path: ./ProxyGuy.WinForms.zip
+          tag_name: release-${{ github.run_number }}
+          name: ProxyGuyMAUI build ${{ github.run_number }}
+          body: |
+            Automated release generated from commit ${{ github.sha }}.
+          draft: false
+          prerelease: false
+          files: |
+            ProxyGuyMAUI-win10-x64.zip

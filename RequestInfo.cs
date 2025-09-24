@@ -1,17 +1,22 @@
 using System;
+using System.Collections.Generic;
 
-namespace ProxyGuy.WinForms
+namespace ProxyGuyMAUI;
+
+public class RequestInfo
 {
-    public class RequestInfo
-    {
-        public DateTime Time { get; set; } = DateTime.Now;
-        public string Method { get; set; }
-        public string Url { get; set; }
-        public string Domain { get; set; }
-        public int StatusCode { get; set; }
-        public System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string,string>> RequestHeaders { get; set; } = new();
-        public System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string,string>> ResponseHeaders { get; set; } = new();
-        public string RequestBody { get; set; }
-        public string ResponseBody { get; set; }
-    }
+    public DateTime Time { get; set; } = DateTime.Now;
+    public long Sequence { get; set; }
+    public string Method { get; set; } = string.Empty;
+    public string Url { get; set; } = string.Empty;
+    public string Domain { get; set; } = string.Empty;
+    public int StatusCode { get; set; }
+    public string Status { get; set; } = string.Empty;
+    public bool IsActive { get; set; }
+    public TimeSpan? Duration { get; set; }
+    public DateTime? CompletedAt { get; set; }
+    public List<KeyValuePair<string, string>> RequestHeaders { get; } = new();
+    public List<KeyValuePair<string, string>> ResponseHeaders { get; } = new();
+    public string RequestBody { get; set; } = string.Empty;
+    public string ResponseBody { get; set; } = string.Empty;
 }

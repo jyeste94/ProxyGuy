@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ProxyGuyMAUI.Views.Controls"
+             x:Class="ProxyGuyMAUI.MainPage"             >
+    <!-- Root layout split into header and content regions -->
+    <Grid RowDefinitions="72,*" ColumnDefinitions="*">
+        <!-- Header Bar replicates Proxyman title area -->
+        <controls:HeaderBar Grid.Row="0" />
+
+        <!-- Main workspace: sidebar + table/details -->
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="16" Padding="16,16,16,12">
+            <controls:Sidebar Grid.Column="0" />
+
+            <Grid Grid.Column="1" RowDefinitions="*,1.2*" RowSpacing="16">
+                <controls:RequestTable Grid.Row="0" />
+                <controls:DetailsPanel Grid.Row="1" />
+            </Grid>
+        </Grid>
+
+    </Grid>
+</ContentPage>
+

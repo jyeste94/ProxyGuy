@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProxyGuyMAUI.Views.Controls.DetailsPanel">
+    <Border Style="{StaticResource PanelBorderStyle}" Padding="0">
+        <Grid RowDefinitions="Auto,*">
+            <!-- Tab strip -->
+            <HorizontalStackLayout Padding="16,10" Spacing="16" Background="{StaticResource PanelBackgroundBrush}">
+                <Button Text="Request" Style="{StaticResource TabButtonStyle}"
+                        Command="{Binding SelectTabCommand}" CommandParameter="Request">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding SelectedTab}" Value="Request">
+                            <Setter Property="TextColor" Value="{StaticResource PrimaryBlueColor}" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Text="Header" Style="{StaticResource TabButtonStyle}"
+                        Command="{Binding SelectTabCommand}" CommandParameter="Header">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding SelectedTab}" Value="Header">
+                            <Setter Property="TextColor" Value="{StaticResource PrimaryBlueColor}" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Text="Query" Style="{StaticResource TabButtonStyle}"
+                        Command="{Binding SelectTabCommand}" CommandParameter="Query">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding SelectedTab}" Value="Query">
+                            <Setter Property="TextColor" Value="{StaticResource PrimaryBlueColor}" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Text="Body" Style="{StaticResource TabButtonStyle}"
+                        Command="{Binding SelectTabCommand}" CommandParameter="Body">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding SelectedTab}" Value="Body">
+                            <Setter Property="TextColor" Value="{StaticResource PrimaryBlueColor}" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Text="Raw" Style="{StaticResource TabButtonStyle}"
+                        Command="{Binding SelectTabCommand}" CommandParameter="Raw">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding SelectedTab}" Value="Raw">
+                            <Setter Property="TextColor" Value="{StaticResource PrimaryBlueColor}" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Text="Pretty" Style="{StaticResource TabButtonStyle}"
+                        Command="{Binding SelectTabCommand}" CommandParameter="Pretty">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding SelectedTab}" Value="Pretty">
+                            <Setter Property="TextColor" Value="{StaticResource PrimaryBlueColor}" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Text="Diff" Style="{StaticResource TabButtonStyle}"
+                        Command="{Binding SelectTabCommand}" CommandParameter="Diff">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding SelectedTab}" Value="Diff">
+                            <Setter Property="TextColor" Value="{StaticResource PrimaryBlueColor}" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Text="Scripts" Style="{StaticResource TabButtonStyle}"
+                        Command="{Binding SelectTabCommand}" CommandParameter="Scripts">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding SelectedTab}" Value="Scripts">
+                            <Setter Property="TextColor" Value="{StaticResource PrimaryBlueColor}" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Text="+" Style="{StaticResource TabButtonStyle}"
+                        Command="{Binding SelectTabCommand}" CommandParameter="Add">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding SelectedTab}" Value="Add">
+                            <Setter Property="TextColor" Value="{StaticResource PrimaryBlueColor}" />
+                            <Setter Property="FontAttributes" Value="Bold" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </HorizontalStackLayout>
+
+            <!-- Tabbed content area -->
+            <Grid Grid.Row="1" Background="{StaticResource PanelBackgroundBrush}" Padding="16">
+                <!-- Summary placeholder when nothing selected -->
+                <Label Text="Select a request to inspect."
+                       FontFamily="{StaticResource PrimaryFont}"
+                       FontSize="14"
+                       TextColor="{StaticResource TextSecondaryColor}"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       IsVisible="False">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding CurrentRequest}" Value="{x:Null}">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+
+                <!-- Request & Header view -->
+                <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,*" IsVisible="False">
+                    <Grid.Triggers>
+                        <DataTrigger TargetType="Grid" Binding="{Binding CurrentRequest}" Value="{x:Null}">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Grid" Binding="{Binding SelectedTab}" Value="Request">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Grid" Binding="{Binding SelectedTab}" Value="Header">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Grid.Triggers>
+
+                    <!-- Request summary cards -->
+                    <Grid Grid.ColumnSpan="2" ColumnDefinitions="Auto,*" Margin="0,0,0,12" ColumnSpacing="16">
+                        <Border Style="{StaticResource PanelBorderStyle}" Padding="12" Background="{StaticResource BaseBackgroundBrush}">
+                            <VerticalStackLayout Spacing="4" WidthRequest="200">
+                                <Label Text="Method" Style="{StaticResource CaptionLabelStyle}" />
+                                <Label Text="{Binding CurrentRequest.Method}" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource PanelBorderStyle}" Padding="12" Background="{StaticResource BaseBackgroundBrush}">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="URL" Style="{StaticResource CaptionLabelStyle}" />
+                                <Label Text="{Binding CurrentRequest.Url}" LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding CurrentRequest.Status}" FontSize="12" TextColor="{StaticResource TextSecondaryColor}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <VerticalStackLayout Spacing="8" Grid.Row="1" Grid.Column="0">
+                        <Label Text="Request Headers" FontAttributes="Bold" FontSize="14" />
+                        <CollectionView ItemsSource="{Binding RequestHeaders}" HeightRequest="200">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="160,*" Padding="0,2">
+                                        <Label Text="{Binding Key}" FontAttributes="Bold" FontSize="13" />
+                                        <Editor Grid.Column="1" Text="{Binding Value}" FontSize="13" TextColor="{StaticResource TextSecondaryColor}" BackgroundColor="Transparent" IsReadOnly="True" AutoSize="TextChanges" Margin="0" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="8" Grid.Row="1" Grid.Column="1">
+                        <Label Text="Response Headers" FontAttributes="Bold" FontSize="14" />
+                        <CollectionView ItemsSource="{Binding ResponseHeaders}" HeightRequest="200">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="160,*" Padding="0,2">
+                                        <Label Text="{Binding Key}" FontAttributes="Bold" FontSize="13" />
+                                        <Editor Grid.Column="1" Text="{Binding Value}" FontSize="13" TextColor="{StaticResource TextSecondaryColor}" BackgroundColor="Transparent" IsReadOnly="True" AutoSize="TextChanges" Margin="0" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Query tab placeholder -->
+                <VerticalStackLayout Spacing="8" IsVisible="False">
+                    <VerticalStackLayout.Triggers>
+                        <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding CurrentRequest}" Value="{x:Null}">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding SelectedTab}" Value="Query">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </VerticalStackLayout.Triggers>
+                    <Label Text="Query parameters" FontAttributes="Bold" FontSize="14" />
+                    <Border Stroke="{StaticResource DividerBrush}" StrokeThickness="1" Padding="12">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8" />
+                        </Border.StrokeShape>
+                        <Label Text="No query string parameters detected." />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Body tab -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="16" IsVisible="False">
+                    <Grid.Triggers>
+                        <DataTrigger TargetType="Grid" Binding="{Binding CurrentRequest}" Value="{x:Null}">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Grid" Binding="{Binding SelectedTab}" Value="Body">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Grid.Triggers>
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Request Body" FontAttributes="Bold" FontSize="14" />
+                        <Editor Text="{Binding RequestBody}" FontFamily="Consolas" FontSize="13" IsReadOnly="True" AutoSize="TextChanges" BackgroundColor="Transparent" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="8" Grid.Column="1">
+                        <Label Text="Response Body" FontAttributes="Bold" FontSize="14" />
+                        <Editor Text="{Binding ResponseBody}" FontFamily="Consolas" FontSize="13" IsReadOnly="True" AutoSize="TextChanges" BackgroundColor="Transparent" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Raw tab -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="16" IsVisible="False">
+                    <Grid.Triggers>
+                        <DataTrigger TargetType="Grid" Binding="{Binding CurrentRequest}" Value="{x:Null}">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Grid" Binding="{Binding SelectedTab}" Value="Raw">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Grid.Triggers>
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Raw Request" FontAttributes="Bold" FontSize="14" />
+                        <ScrollView Orientation="Both">
+                            <Editor Text="{Binding RequestBody}" FontFamily="Consolas" FontSize="13" IsReadOnly="True" BackgroundColor="Transparent" AutoSize="TextChanges" />
+                        </ScrollView>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="8" Grid.Column="1">
+                        <Label Text="Raw Response" FontAttributes="Bold" FontSize="14" />
+                        <ScrollView Orientation="Both">
+                            <Editor Text="{Binding ResponseBody}" FontFamily="Consolas" FontSize="13" IsReadOnly="True" BackgroundColor="Transparent" AutoSize="TextChanges" />
+                        </ScrollView>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Pretty tab -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="16" IsVisible="False">
+                    <Grid.Triggers>
+                        <DataTrigger TargetType="Grid" Binding="{Binding CurrentRequest}" Value="{x:Null}">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Grid" Binding="{Binding SelectedTab}" Value="Pretty">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Grid.Triggers>
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Beautified Request" FontAttributes="Bold" FontSize="14" />
+                        <Editor Text="{Binding PrettyRequestBody}" FontFamily="Consolas" FontSize="13" IsReadOnly="True" BackgroundColor="Transparent" AutoSize="TextChanges" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="8" Grid.Column="1">
+                        <Label Text="Beautified Response" FontAttributes="Bold" FontSize="14" />
+                        <Editor Text="{Binding PrettyResponseBody}" FontFamily="Consolas" FontSize="13" IsReadOnly="True" BackgroundColor="Transparent" AutoSize="TextChanges" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Diff tab placeholder -->
+                <VerticalStackLayout Spacing="12" IsVisible="False" HorizontalOptions="Center" VerticalOptions="Center">
+                    <VerticalStackLayout.Triggers>
+                        <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding SelectedTab}" Value="Diff">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </VerticalStackLayout.Triggers>
+                    <Label Text="Diff viewer"
+                           FontAttributes="Bold"
+                           FontSize="16" />
+                    <Label Text="Hook your favourite diff engine here."
+                           HorizontalTextAlignment="Center"
+                           WidthRequest="240" />
+                </VerticalStackLayout>
+
+                <!-- Scripts tab placeholder -->
+                <VerticalStackLayout Spacing="12" IsVisible="False" HorizontalOptions="Center" VerticalOptions="Center">
+                    <VerticalStackLayout.Triggers>
+                        <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding SelectedTab}" Value="Scripts">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </VerticalStackLayout.Triggers>
+                    <Label Text="Scripting hooks"
+                           FontAttributes="Bold" />
+                    <Label Text="Inject automation or replay scripts from here." HorizontalTextAlignment="Center" WidthRequest="240" />
+                    <Button Text="Add Script" Style="{StaticResource GhostButtonStyle}" />
+                </VerticalStackLayout>
+
+                <!-- Add tab placeholder -->
+                <VerticalStackLayout Spacing="8" IsVisible="False" HorizontalOptions="Center" VerticalOptions="Center">
+                    <VerticalStackLayout.Triggers>
+                        <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding SelectedTab}" Value="Add">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </VerticalStackLayout.Triggers>
+                    <Label Text="Add a new inspector tab" FontAttributes="Bold" />
+                    <Label Text="Use this space to plug your custom viewers." />
+                </VerticalStackLayout>
+            </Grid>
+        </Grid>
+    </Border>
+</ContentView>
+
+
+
+
+
+
+
+

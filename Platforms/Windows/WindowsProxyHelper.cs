@@ -1,8 +1,9 @@
+#if WINDOWS
 using System;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
-namespace ProxyGuy.WinForms
+namespace ProxyGuyMAUI
 {
     public static class WindowsProxyHelper
     {
@@ -37,3 +38,4 @@ namespace ProxyGuy.WinForms
         }
     }
 }
+#endif

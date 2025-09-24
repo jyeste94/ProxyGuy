@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProxyGuyMAUI.Views.Controls.Sidebar"
+             WidthRequest="260">
+    <ContentView.Triggers>
+        <DataTrigger TargetType="ContentView" Binding="{Binding IsSidebarCollapsed}" Value="True">
+            <Setter Property="WidthRequest" Value="60" />
+        </DataTrigger>
+        <DataTrigger TargetType="ContentView" Binding="{Binding IsSidebarCollapsed}" Value="False">
+            <Setter Property="WidthRequest" Value="260" />
+        </DataTrigger>
+    </ContentView.Triggers>
+
+    <Border Background="{StaticResource PanelBackgroundBrush}" StrokeThickness="0" Padding="16,12">
+        <Grid RowDefinitions="Auto,*,Auto">
+            <!-- Collapse toggle -->
+            <Button Grid.Row="0" Style="{StaticResource IconButtonStyle}"
+                    Text="&#xE700;"
+                    HorizontalOptions="Start"
+                    Command="{Binding ToggleSidebarCommand}">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding IsSidebarCollapsed}" Value="True">
+                        <Setter Property="Text" Value="&#xE701;" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+
+            <!-- Domain list -->
+            <ScrollView Grid.Row="1" Margin="0,12,0,12">
+                <VerticalStackLayout Spacing="18">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto" HeightRequest="20">
+                            <Label Text="DOMAINS"
+                                   Style="{StaticResource CaptionLabelStyle}"
+                                   FontAttributes="Bold"
+                                   Opacity="0.7">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsSidebarCollapsed}" Value="True">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Border Grid.Column="1" Style="{StaticResource InfoBadgeStyle}" Padding="8,2">
+                                <Label Text="{Binding VisibleDomains.Count}"
+                                       FontSize="12"
+                                       TextColor="White" />
+                            </Border>
+                        </Grid>
+
+                        <CollectionView ItemsSource="{Binding VisibleDomains}"
+                                        SelectionMode="Single"
+                                        SelectedItem="{Binding SelectedDomain, Mode=TwoWay}"
+                                        Margin="0,4,0,0">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="0" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Style="{StaticResource SidebarItemContainerStyle}" Padding="24,6,12,6">
+                                        <Label Grid.Column="1" Text="{Binding}"
+                                               FontFamily="{StaticResource PrimaryFont}"
+                                               FontSize="13"
+                                               TextColor="{StaticResource TextSecondaryColor}">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.IsSidebarCollapsed}" Value="True">
+                                                    <Setter Property="IsVisible" Value="False" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Ellipse Grid.Column="0"
+                                                 WidthRequest="6"
+                                                 HeightRequest="6"
+                                                 Fill="{StaticResource PrimaryBlueBrush}"
+                                                 HorizontalOptions="Start"
+                                                 VerticalOptions="Center">
+                                            <Ellipse.Triggers>
+                                                <DataTrigger TargetType="Ellipse" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.IsSidebarCollapsed}" Value="False">
+                                                    <Setter Property="IsVisible" Value="False" />
+                                                </DataTrigger>
+                                            </Ellipse.Triggers>
+                                        </Ellipse>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- Filter controls -->
+            <Grid Grid.Row="2">
+                <Entry Placeholder="Filter (Ctrl+F)"
+                       Text="{Binding FilterText, Mode=TwoWay}"
+                       FontFamily="{StaticResource PrimaryFont}"
+                       BackgroundColor="#EFEFF5"
+                       TextColor="{StaticResource TextSecondaryColor}"
+                       HeightRequest="36"
+                       Margin="0">
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry" Binding="{Binding IsSidebarCollapsed}" Value="True">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </Entry>
+                <Button Text="&#xE721;"
+                        Style="{StaticResource IconButtonStyle}"
+                        FontFamily="Segoe MDL2 Assets"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center"
+                        IsVisible="False">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsSidebarCollapsed}" Value="True">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </Grid>
+        </Grid>
+    </Border>
+</ContentView>

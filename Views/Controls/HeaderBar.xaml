@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProxyGuyMAUI.Views.Controls.HeaderBar">
+    <!-- Two-row header replicating Proxyman top chrome -->
+    <Border Style="{StaticResource PanelBorderStyle}" Padding="16,12" StrokeThickness="0" Background="{StaticResource PanelBackgroundBrush}">
+        <Grid RowDefinitions="Auto,Auto">
+            <Grid ColumnDefinitions="Auto,*,Auto" Row="0" ColumnSpacing="16">
+                <!-- Left utility buttons -->
+                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                    <Button Style="{StaticResource IconButtonStyle}"
+                            Command="{Binding ToggleListeningCommand}"
+                            FontFamily="Segoe MDL2 Assets"
+                            Text="&#xE768;">
+                        <Button.Triggers>
+                            <!-- Pause icon when listening -->
+                            <DataTrigger TargetType="Button" Binding="{Binding IsListening}" Value="True">
+                                <Setter Property="Text" Value="&#xE769;" />
+                                <Setter Property="Background" Value="{StaticResource PrimaryBlueBrush}" />
+                                <Setter Property="TextColor" Value="White" />
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                    <Button Style="{StaticResource IconButtonStyle}"
+                            Command="{Binding ClearCommand}"
+                            Text="&#xE74D;" />
+                </HorizontalStackLayout>
+
+                <!-- Center status label -->
+                <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
+                    <Ellipse WidthRequest="8" HeightRequest="8" Fill="{StaticResource AccentGreenBrush}">
+                        <Ellipse.Triggers>
+                            <!-- Comment: adjust the colors below to tune the listening indicator -->
+                            <DataTrigger TargetType="Ellipse" Binding="{Binding IsListening}" Value="False">
+                                <Setter Property="Fill" Value="#FF5C5C" />
+                            </DataTrigger>
+                        </Ellipse.Triggers>
+                    </Ellipse>
+                    <Label Text="{Binding ListeningStatusText}"
+                           VerticalOptions="Center"
+                           FontFamily="{StaticResource PrimaryFont}"
+                           FontSize="14"
+                           TextColor="{StaticResource TextSecondaryColor}" />
+                </HorizontalStackLayout>
+
+                <!-- Right badges and window controls -->
+                <HorizontalStackLayout Grid.Column="2" Spacing="12" VerticalOptions="Center">
+                    <!--  <Border Style="{StaticResource BadgeStyle}" Background="{StaticResource WarningYellowBrush}" StrokeThickness="0">
+                        <Label Text="FULL VERSION"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               TextColor="Black" />
+                    </Border>                    <Border Style="{StaticResource BadgeStyle}" Background="{StaticResource WarningYellowBrush}" StrokeThickness="0" Padding="10,4">
+                        <Label Text="10 New Updates"
+                               FontSize="12"
+                               TextColor="Black" />
+                    </Border>
+                    <Border Style="{StaticResource BadgeStyle}" Background="{StaticResource WarningYellowBrush}" StrokeThickness="0" Padding="10,4">
+                        <Label Text="TRIAL VERSION"
+                               FontSize="12"
+                               TextColor="Black" />
+                    </Border>
+
+                    <HorizontalStackLayout Spacing="4">
+                        <Button Style="{StaticResource IconButtonStyle}" Text="&#xE921;" />
+                        <Button Style="{StaticResource IconButtonStyle}" Text="&#xE922;" />
+                        <Button Style="{StaticResource IconButtonStyle}" Text="&#xE8BB;">
+                            <Button.Triggers>
+                                <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#FFE3E3" />
+                                    <Setter Property="TextColor" Value="#CC0000" />
+                                </Trigger>
+                            </Button.Triggers>
+                        </Button>
+                    </HorizontalStackLayout>-->
+                </HorizontalStackLayout>
+            </Grid>
+
+            <!-- Secondary menu -->
+            <HorizontalStackLayout Grid.Row="1" Spacing="16" Margin="0,16,0,0">
+                <!-- Comment: add/remove menu items or attach commands as needed -->
+                <Button Style="{StaticResource TabButtonStyle}" Text="File" />
+                <Button Style="{StaticResource TabButtonStyle}" Text="View" />
+                <Button Style="{StaticResource TabButtonStyle}" Text="Tools" />
+                <Button Style="{StaticResource TabButtonStyle}" Text="Diff" />
+                <Button Style="{StaticResource TabButtonStyle}" Text="Scripting" />
+                <Button Style="{StaticResource TabButtonStyle}" Text="Certificate" />
+                <Button Style="{StaticResource TabButtonStyle}" Text="Setup" />
+                <Button Style="{StaticResource TabButtonStyle}" Text="Tab" />
+                <Button Style="{StaticResource TabButtonStyle}" Text="Help" />
+            </HorizontalStackLayout>
+        </Grid>
+    </Border>
+</ContentView>

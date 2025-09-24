@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProxyGuyMAUI.Views.Controls.StatusBar">
+    <Border Background="{StaticResource PanelBackgroundBrush}" StrokeThickness="0" Padding="16,6">
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="16" VerticalOptions="Center">
+            <HorizontalStackLayout Spacing="8">
+                <Button Text="Clear" Style="{StaticResource GhostButtonStyle}" Command="{Binding ClearCommand}" />
+                <Button Text="Filter" Style="{StaticResource GhostButtonStyle}" />
+                <Button Text="Auto Select" Style="{StaticResource GhostButtonStyle}" />
+            </HorizontalStackLayout>
+
+            <Label Grid.Column="1" Text="{Binding StatusSummary}" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="{StaticResource PrimaryFont}" FontSize="13" />
+
+            <Border Grid.Column="2" Style="{StaticResource BadgeStyle}" Background="{StaticResource PrimaryBlueBrush}" StrokeThickness="0">
+                <Label Text="Proxy Overridden" TextColor="White" FontSize="12" FontAttributes="Bold" />
+            </Border>
+        </Grid>
+    </Border>
+</ContentView>

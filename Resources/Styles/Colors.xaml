@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xaml-comp compile='true' ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <!-- Core palette -->
+    <Color x:Key="BaseBackgroundColor">#F5F6F8</Color>
+    <Color x:Key="PanelBackgroundColor">#FFFFFF</Color>
+    <Color x:Key="PrimaryBlueColor">#2F6BFF</Color>
+    <Color x:Key="WarningYellowColor">#FFC107</Color>
+    <Color x:Key="AccentGreenColor">#2ECC71</Color>
+    <Color x:Key="TextPrimaryColor">#1F2937</Color>
+    <Color x:Key="TextSecondaryColor">#4B5563</Color>
+    <Color x:Key="DividerColor">#E5E7EB</Color>
+    <Color x:Key="HoverColor">#EEF3FF</Color>
+    <Color x:Key="BadgeBorderColor">#1E1E1E</Color>
+    <Color x:Key="ShadowColor">#1A000000</Color>
+
+    <!-- Brushes -->
+    <SolidColorBrush x:Key="BaseBackgroundBrush" Color="{StaticResource BaseBackgroundColor}" />
+    <SolidColorBrush x:Key="PanelBackgroundBrush" Color="{StaticResource PanelBackgroundColor}" />
+    <SolidColorBrush x:Key="PrimaryBlueBrush" Color="{StaticResource PrimaryBlueColor}" />
+    <SolidColorBrush x:Key="WarningYellowBrush" Color="{StaticResource WarningYellowColor}" />
+    <SolidColorBrush x:Key="AccentGreenBrush" Color="{StaticResource AccentGreenColor}" />
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}" />
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}" />
+    <SolidColorBrush x:Key="DividerBrush" Color="{StaticResource DividerColor}" />
+    <SolidColorBrush x:Key="HoverBrush" Color="{StaticResource HoverColor}" />
+    <SolidColorBrush x:Key="BadgeBorderBrush" Color="{StaticResource BadgeBorderColor}" />
+</ResourceDictionary>
+

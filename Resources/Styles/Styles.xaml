@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xaml-comp compile='true' ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=netstandard">
+    <!-- Typography helpers -->
+    <OnPlatform x:Key="PrimaryFont" x:TypeArguments="x:String">
+        <On Platform="WinUI" Value="Segoe UI" />
+        <On Platform="MacCatalyst" Value="SF Pro Text" />
+        <On Platform="iOS" Value="SF Pro Text" />
+        <On Platform="Android" Value="sans-serif" />
+    </OnPlatform>
+
+    <!-- Spacing tokens -->
+    <Thickness x:Key="PanelPadding">16,16,16,16</Thickness>
+    <CornerRadius x:Key="PanelCornerRadius">8</CornerRadius>
+
+    <!-- Base styles -->
+    <Style TargetType="ContentPage">
+        <Setter Property="Background" Value="{StaticResource BaseBackgroundBrush}" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="HeadlineLabelStyle">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="BodyLabelStyle">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{StaticResource TextSecondaryColor}" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="CaptionLabelStyle">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource TextSecondaryColor}" />
+    </Style>
+
+    <!-- Panel container -->
+    <Style TargetType="Border" x:Key="PanelBorderStyle">
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="8" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{StaticResource PanelBackgroundBrush}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="{StaticResource ShadowColor}" Offset="0,2" Radius="8" Opacity="0.2" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Padding" Value="{StaticResource PanelPadding}" />
+        <Setter Property="Margin" Value="0" />
+    </Style>
+
+    <!-- Icon button 32x32 -->
+    <Style TargetType="Button" x:Key="IconButtonStyle">
+        <Setter Property="WidthRequest" Value="32" />
+        <Setter Property="HeightRequest" Value="32" />
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="{StaticResource HoverBrush}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="{StaticResource PrimaryBlueBrush}" />
+                                <Setter Property="TextColor" Value="White" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Ghost button for status bar -->
+    <Style TargetType="Button" x:Key="GhostButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderColor" Value="{StaticResource DividerBrush}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="TextColor" Value="{StaticResource TextSecondaryColor}" />
+        <Setter Property="Padding" Value="12,6" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="{StaticResource HoverBrush}" />
+                                <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Primary pill badge -->
+    <Style TargetType="Border" x:Key="BadgeStyle">
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="20" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{StaticResource WarningYellowBrush}" />
+        <Setter Property="Padding" Value="10,4" />
+        <Setter Property="Stroke" Value="{StaticResource BadgeBorderBrush}" />
+        <Setter Property="StrokeThickness" Value="0.8" />
+    </Style>
+
+    <Style TargetType="Border" x:Key="InfoBadgeStyle" BasedOn="{StaticResource BadgeStyle}">
+        <Setter Property="Background" Value="{StaticResource PrimaryBlueBrush}" />
+        <Setter Property="Stroke" Value="{StaticResource PrimaryBlueBrush}" />
+    </Style>
+
+    <!-- Tab labels -->
+    <Style TargetType="Button" x:Key="TabButtonStyle">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource TextSecondaryColor}" />
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Padding" Value="8,4" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor" Value="{StaticResource PrimaryBlueColor}" />
+                                <Setter Property="FontAttributes" Value="Bold" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Sidebar list items -->
+    <Style TargetType="Grid" x:Key="SidebarItemContainerStyle">
+        <Setter Property="Padding" Value="12,6" />
+        <Setter Property="ColumnDefinitions">
+            <Setter.Value>
+                <ColumnDefinitionCollection>
+                    <ColumnDefinition Width="28" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </ColumnDefinitionCollection>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="{StaticResource HoverBrush}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="#E6EEFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Data row template helper -->
+    <Style TargetType="Grid" x:Key="DataRowGridStyle">
+        <Setter Property="ColumnSpacing" Value="12" />
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="{StaticResource HoverBrush}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="#D8E4FF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Data grid header text -->
+    <Style TargetType="Label" x:Key="DataHeaderLabelStyle">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource TextSecondaryColor}" />
+        <Setter Property="Margin" Value="0,0,0,8" />
+    </Style>
+</ResourceDictionary>
+
+
+
+
+
+
