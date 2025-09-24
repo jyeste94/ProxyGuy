@@ -1,4 +1,4 @@
-﻿name: Release on push
+name: Release on push
 
 on:
   push:
@@ -19,6 +19,9 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
+
+      - name: Install .NET MAUI workloads
+        run: dotnet workload install maui
 
       - name: Restore dependencies
         run: dotnet restore
