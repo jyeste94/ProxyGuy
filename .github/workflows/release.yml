@@ -31,18 +31,20 @@ jobs:
 
       - name: Compress artifact
         run: |
-          Compress-Archive -Path artifacts/win/* -DestinationPath ProxyGuyMAUI-win10-x64.zip -Force
+          Compress-Archive -Path artifacts/win/* -DestinationPath ProxyGuy-win10-x64.zip -Force
+
+      - name: Copy standalone executable
+        run: Copy-Item artifacts/win/ProxyGuy.exe ProxyGuy-win10-x64.exe
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: release-${{ github.run_number }}
-          name: ProxyGuyMAUI build ${{ github.run_number }}
+          name: ProxyGuy build ${{ github.run_number }}
           body: |
             Automated release generated from commit ${{ github.sha }}.
           draft: false
           prerelease: false
           files: |
-            ProxyGuyMAUI-win10-x64.zip
-
-
+            ProxyGuy-win10-x64.exe
+            ProxyGuy-win10-x64.zip
