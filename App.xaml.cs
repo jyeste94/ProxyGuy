@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProxyGuyMAUI
+namespace ProxyGuy
 {
     public partial class App : Application
     {

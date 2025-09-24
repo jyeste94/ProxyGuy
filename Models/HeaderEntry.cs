@@ -1,4 +1,4 @@
-namespace ProxyGuyMAUI.Models;
+namespace ProxyGuy.Models;
 
 public class HeaderEntry
 {

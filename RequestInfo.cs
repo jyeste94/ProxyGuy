@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ProxyGuyMAUI;
+namespace ProxyGuy;
 
 public class RequestInfo
 {

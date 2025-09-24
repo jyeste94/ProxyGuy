@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using ProxyGuyMAUI.ViewModels;
+using ProxyGuy.ViewModels;
 
-namespace ProxyGuyMAUI;
+namespace ProxyGuy;
 
 public partial class MainPage : ContentPage
 {

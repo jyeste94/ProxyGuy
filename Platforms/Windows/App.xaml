@@ -1,8 +1,8 @@
 ﻿<maui:MauiWinUIApplication
-    x:Class="ProxyGuyMAUI.WinUI.App"
+    x:Class="ProxyGuy.WinUI.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:maui="using:Microsoft.Maui"
-    xmlns:local="using:ProxyGuyMAUI.WinUI">
+    xmlns:local="using:ProxyGuy.WinUI">
 
 </maui:MauiWinUIApplication>

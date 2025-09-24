@@ -1,6 +1,6 @@
 using System;
 
-namespace ProxyGuyMAUI.Models;
+namespace ProxyGuy.Models;
 
 public class RequestItem
 {

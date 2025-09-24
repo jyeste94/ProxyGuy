@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.ApplicationModel;
-using ProxyGuyMAUI;
-using ProxyGuyMAUI.Models;
+using ProxyGuy;
+using ProxyGuy.Models;
 
-namespace ProxyGuyMAUI.ViewModels;
+namespace ProxyGuy.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {

@@ -17,7 +17,7 @@ using Titanium.Web.Proxy;
 using Titanium.Web.Proxy.EventArguments;
 using Titanium.Web.Proxy.Models;
 
-namespace ProxyGuyMAUI;
+namespace ProxyGuy;
 
 public class ProxyServerService : INotifyPropertyChanged
 {

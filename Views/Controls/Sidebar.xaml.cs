@@ -1,4 +1,4 @@
-namespace ProxyGuyMAUI.Views.Controls;
+namespace ProxyGuy.Views.Controls;
 
 public partial class Sidebar : ContentView
 {

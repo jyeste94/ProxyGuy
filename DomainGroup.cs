@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace ProxyGuyMAUI;
+namespace ProxyGuy;
 
 public class DomainGroup : ObservableCollection<RequestInfo>
 {

@@ -1,4 +1,4 @@
-﻿namespace ProxyGuyMAUI
+﻿namespace ProxyGuy
 {
     public partial class AppShell : Shell
     {

@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace ProxyGuyMAUI
+namespace ProxyGuy
 {
     [Application]
     public class MainApplication : MauiApplication

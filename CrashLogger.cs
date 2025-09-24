@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ProxyGuyMAUI;
+namespace ProxyGuy;
 
 internal static class CrashLogger
 {

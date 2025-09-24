@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 
-namespace ProxyGuyMAUI
+namespace ProxyGuy
 {
     public static class MauiProgram
     {
