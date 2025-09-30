@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProxyGuy.Views.Controls.RequestTable">
@@ -16,6 +16,7 @@
                     <ColumnDefinition Width="120" />
                     <ColumnDefinition Width="110" />
                     <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="140" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Text="ID" Style="{StaticResource DataHeaderLabelStyle}" />
                 <Label Grid.Column="1" Text="URL" Style="{StaticResource DataHeaderLabelStyle}" />
@@ -37,6 +38,7 @@
                         </DataTrigger>
                     </Label.Triggers>
                 </Label>
+                <Label Grid.Column="8" Text="Guardar" Style="{StaticResource DataHeaderLabelStyle}" />
             </Grid>
 
             <!-- Data rows -->
@@ -61,6 +63,7 @@
                                 <ColumnDefinition Width="120" />
                                 <ColumnDefinition Width="110" />
                                 <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="140" />
                             </Grid.ColumnDefinitions>
 
                             <Label Grid.Column="0" Text="{Binding Id}" FontFamily="{StaticResource PrimaryFont}" FontSize="13" />
@@ -111,6 +114,12 @@
                                     </Label.Triggers>
                                 </Label>
                             </Border>
+
+                            <Button Grid.Column="8"
+                                    Text="Guardar"
+                                    Style="{StaticResource GhostButtonStyle}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SaveRequestCommand}"
+                                    CommandParameter="{Binding}" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
