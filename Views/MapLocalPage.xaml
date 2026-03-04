@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ProxyGuy.ViewModels"
+             x:Class="ProxyGuy.Views.MapLocalPage"
+             Title="Map Local Rules">
+    <ContentPage.BindingContext>
+        <vm:MapLocalViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto,Auto,*">
+        <Border Grid.Row="0" Margin="16,16,16,0" Style="{StaticResource InfoBannerStyle}">
+            <Label Text="Intercepta URLs y responde con archivos locales para pruebas rapidas sin tocar backend."
+                   TextColor="{StaticResource InfoTextColor}"
+                   FontSize="13" />
+        </Border>
+
+        <!-- Header -->
+        <Border Grid.Row="1" Style="{StaticResource PanelBorderStyle}" Padding="16,12" Margin="16,12,16,0">
+             <VerticalStackLayout Spacing="16">
+                 <Label Text="Create Rule" Style="{StaticResource HeadlineLabelStyle}" FontSize="16"/>
+                 
+                 <Grid ColumnDefinitions="*,*,100,Auto" ColumnSpacing="12">
+                     <VerticalStackLayout Spacing="4">
+                         <Label Text="URL Pattern (contains)" Style="{StaticResource SectionTitleLabelStyle}"/>
+                         <Entry Text="{Binding NewPattern}" Placeholder="e.g. api/v1/user" />
+                     </VerticalStackLayout>
+                     
+                     <VerticalStackLayout Grid.Column="1" Spacing="4">
+                         <Label Text="Local File" Style="{StaticResource SectionTitleLabelStyle}"/>
+                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                             <Entry Text="{Binding NewFilePath}" IsReadOnly="True" Placeholder="Select file..." />
+                             <Button Grid.Column="1" Text="..." Command="{Binding PickFileCommand}" WidthRequest="40" Style="{StaticResource GhostButtonStyle}"/>
+                         </Grid>
+                     </VerticalStackLayout>
+                     
+                     <VerticalStackLayout Grid.Column="2" Spacing="4">
+                         <Label Text="Status" Style="{StaticResource SectionTitleLabelStyle}"/>
+                         <Entry Text="{Binding NewStatusCode}" Keyboard="Numeric" />
+                     </VerticalStackLayout>
+                     
+                     <Button Grid.Column="3" 
+                             Text="Add Rule" 
+                             Command="{Binding AddRuleCommand}" 
+                             VerticalOptions="End"
+                             Style="{StaticResource PrimaryButtonStyle}"/>
+                 </Grid>
+             </VerticalStackLayout>
+        </Border>
+
+        <!-- List -->
+        <CollectionView Grid.Row="2" ItemsSource="{Binding Rules}" Margin="16">
+            <CollectionView.Header>
+                <Label Text="Active Rules" Style="{StaticResource HeadlineLabelStyle}" Margin="0,16,0,8"/>
+            </CollectionView.Header>
+            <CollectionView.EmptyView>
+                <Label Text="No hay reglas activas"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Style="{StaticResource BodyLabelStyle}" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource PanelBorderStyle}" Padding="12" Margin="0,0,0,8">
+                        <Grid ColumnDefinitions="Auto,*,*,Auto,Auto" ColumnSpacing="12" VerticalOptions="Center">
+                            <Switch IsToggled="{Binding IsEnabled}" />
+                            
+                            <Label Grid.Column="1" Text="{Binding UrlPattern}" FontAttributes="Bold" LineBreakMode="TailTruncation" VerticalOptions="Center"/>
+                            
+                            <Label Grid.Column="2" Text="{Binding LocalFilePath}" TextColor="{StaticResource TextSecondaryColor}" LineBreakMode="MiddleTruncation" VerticalOptions="Center"/>
+                            
+                            <Border Grid.Column="3" Background="{StaticResource PanelAltBackgroundBrush}" Stroke="{StaticResource DividerBrush}" StrokeThickness="1" Padding="8,4" StrokeShape="RoundRectangle 4">
+                                <Label Text="{Binding StatusCode}" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextPrimaryColor}"/>
+                            </Border>
+
+                            <Button Grid.Column="4" 
+                                    Text="Delete" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveRuleCommand}"
+                                    CommandParameter="{Binding}"
+                                    Style="{StaticResource DangerGhostButtonStyle}"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

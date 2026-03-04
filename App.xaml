@@ -2,6 +2,7 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ProxyGuy"
+             xmlns:converters="clr-namespace:ProxyGuy.Converters"
              x:Class="ProxyGuy.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -9,6 +10,8 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <converters:StringContainsConverter x:Key="StringContainsConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

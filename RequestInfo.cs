@@ -13,10 +13,14 @@ public class RequestInfo
     public int StatusCode { get; set; }
     public string Status { get; set; } = string.Empty;
     public bool IsActive { get; set; }
+    public DateTime? ResponseStartedAt { get; set; }
     public TimeSpan? Duration { get; set; }
     public DateTime? CompletedAt { get; set; }
+    public long ResponseSizeBytes { get; set; }
     public List<KeyValuePair<string, string>> RequestHeaders { get; } = new();
     public List<KeyValuePair<string, string>> ResponseHeaders { get; } = new();
     public string RequestBody { get; set; } = string.Empty;
     public string ResponseBody { get; set; } = string.Empty;
+    public string? RequestBodyPath { get; set; }
+    public string? ResponseBodyPath { get; set; }
 }

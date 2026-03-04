@@ -6,4 +6,9 @@ public partial class Sidebar : ContentView
     {
         InitializeComponent();
     }
+
+    public void FocusFilter()
+    {
+        FilterEntry?.Focus();
+    }
 }

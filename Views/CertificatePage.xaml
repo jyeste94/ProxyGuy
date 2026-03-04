@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ProxyGuy.ViewModels"
+             x:Class="ProxyGuy.Views.CertificatePage"
+             Title="Gestion de Certificados SSL">
+    
+    <ContentPage.BindingContext>
+        <vm:CertificateViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="20">
+            
+            <!-- Status Section -->
+            <Border Style="{StaticResource PanelBorderStyle}" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Estado del Certificado" 
+                           Style="{StaticResource HeadlineLabelStyle}" 
+                           FontSize="18" />
+                    
+                    <Label Text="{Binding StatusMessage}" 
+                           FontSize="14" 
+                           TextColor="{StaticResource TextPrimaryColor}" />
+                    
+                    <Button Text="Actualizar Estado" 
+                            Command="{Binding RefreshStatusCommand}"
+                            Style="{StaticResource GhostButtonStyle}"
+                            HorizontalOptions="Start"
+                            Margin="0,8,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Actions Section -->
+            <Border Style="{StaticResource PanelBorderStyle}" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Acciones" 
+                           Style="{StaticResource HeadlineLabelStyle}" 
+                           FontSize="18" />
+                    
+                    <Button Text="Exportar Certificado (.cer)" 
+                            Command="{Binding ExportCertificateCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}" />
+                    
+                    <Button Text="Instalar Certificado (Automatico)" 
+                            Command="{Binding InstallCertificateCommand}"
+                            Style="{StaticResource SuccessButtonStyle}" />
+                    
+                    <Button Text="Desinstalar Certificado" 
+                            Command="{Binding UninstallCertificateCommand}"
+                            Style="{StaticResource DangerButtonStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Instructions Section -->
+            <Border Style="{StaticResource PanelBorderStyle}" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Instrucciones de Instalacion Manual" 
+                           Style="{StaticResource HeadlineLabelStyle}" 
+                           FontSize="18" />
+                    
+                    <Label Text="{Binding InstallInstructions}" 
+                           FontSize="13" 
+                           TextColor="{StaticResource TextSecondaryColor}"
+                           LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Info Section -->
+            <Border Style="{StaticResource WarningBannerStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Por que necesito esto?" 
+                           FontAttributes="Bold"
+                           FontSize="14"
+                           TextColor="{StaticResource WarningTextColor}" />
+                    
+                    <Label FontSize="13" LineBreakMode="WordWrap" TextColor="{StaticResource WarningTextColor}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Para inspeccionar trafico HTTPS, ProxyGuy necesita actuar como intermediario. " />
+                                <Span Text="Esto requiere que tu sistema confie en el certificado raiz de ProxyGuy. " />
+                                <Span Text="Sin esto, los navegadores mostraran advertencias de seguridad." FontAttributes="Bold" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

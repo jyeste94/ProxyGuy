@@ -3,21 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:ProxyGuy.Views.Controls"
              x:Class="ProxyGuy.MainPage"             >
-    <!-- Root layout split into header and content regions -->
-    <Grid RowDefinitions="72,*" ColumnDefinitions="*">
+
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="File">
+            <MenuFlyoutItem Text="Exit" Command="{Binding ExitApplicationCommand}" />
+        </MenuBarItem>
+        <MenuBarItem Text="Tools">
+            <MenuFlyoutItem Text="Focus Filter (Ctrl+F)" Command="{Binding FocusSidebarFilterCommand}" />
+            <MenuFlyoutItem Text="Toggle Density (Ctrl+Shift+D)" Command="{Binding ToggleRowDensityCommand}" />
+            <MenuFlyoutItem Text="Map Local Rules" Command="{Binding NavigateToMapLocalCommand}" />
+            <MenuFlyoutItem Text="SSL Certificates" Command="{Binding NavigateToCertificatesCommand}" />
+            <MenuFlyoutItem Text="SSL Proxying List" Command="{Binding NavigateToSslProxyingCommand}" />
+            <MenuFlyoutItem Text="Breakpoints" Command="{Binding NavigateToBreakpointsCommand}" />
+            <MenuFlyoutItem Text="PHP Integration" Command="{Binding NavigateToPhpIntegrationCommand}" />
+            <MenuFlyoutItem Text="Export Session HAR" Command="{Binding SaveSessionHarCommand}" />
+            <MenuFlyoutItem Text="Export Session Postman" Command="{Binding SaveSessionPostmanCommand}" />
+            <MenuFlyoutItem Text="Throttle: No Throttling" Command="{Binding SetThrottleProfileCommand}" CommandParameter="No Throttling" />
+            <MenuFlyoutItem Text="Throttle: Fast 3G (100ms)" Command="{Binding SetThrottleProfileCommand}" CommandParameter="Fast 3G (100ms)" />
+            <MenuFlyoutItem Text="Throttle: Slow 3G (500ms)" Command="{Binding SetThrottleProfileCommand}" CommandParameter="Slow 3G (500ms)" />
+            <MenuFlyoutItem Text="Throttle: Edge / Bad (2s)" Command="{Binding SetThrottleProfileCommand}" CommandParameter="Edge / Bad (2s)" />
+            <MenuFlyoutItem Text="Throttle: Very Bad (5s)" Command="{Binding SetThrottleProfileCommand}" CommandParameter="Very Bad (5s)" />
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
+
+    <!-- Root layout split into header/content/status regions -->
+    <Grid RowDefinitions="64,*,Auto" ColumnDefinitions="*">
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0.0" Color="{StaticResource PanelAltBackgroundColor}" />
+                <GradientStop Offset="1.0" Color="{StaticResource BaseBackgroundColor}" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
         <!-- Header Bar replicates Proxyman title area -->
-        <controls:HeaderBar Grid.Row="0" />
+        <controls:HeaderBar Grid.Row="0" BindingContext="{Binding}" Margin="14,10,14,0" />
 
         <!-- Main workspace: sidebar + table/details -->
-        <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="16" Padding="16,16,16,12">
-            <controls:Sidebar Grid.Column="0" />
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="14" Padding="14,12,14,10">
+            <controls:Sidebar x:Name="SidebarControl" Grid.Column="0" />
 
-            <Grid Grid.Column="1" RowDefinitions="*,1.2*" RowSpacing="16">
+            <Grid x:Name="MainContentGrid" Grid.Column="1" RowDefinitions="*,1.18*" RowSpacing="14">
                 <controls:RequestTable Grid.Row="0" />
                 <controls:DetailsPanel Grid.Row="1" />
             </Grid>
         </Grid>
 
+        <controls:StatusBar Grid.Row="2" BindingContext="{Binding}" Margin="14,0,14,10" />
+
+        <Grid Grid.RowSpan="3"
+              BackgroundColor="{StaticResource OverlayScrimColor}"
+              IsVisible="{Binding IsBusy}"
+              InputTransparent="False">
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                Color="White"
+                                WidthRequest="48"
+                                HeightRequest="48"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+        </Grid>
+
     </Grid>
 </ContentPage>
-

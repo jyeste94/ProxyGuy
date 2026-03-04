@@ -1,35 +1,37 @@
-﻿using System;
+using System;
 using System.IO;
+using Microsoft.Maui.Storage;
 
 namespace ProxyGuy;
 
-internal static class CrashLogger
+public static class CrashLogger
 {
-    public static void Log(string stage, Exception ex)
-        => LogInternal(stage, ex.ToString());
-
-    public static void Log(string stage, string message)
-        => LogInternal(stage, message);
-
-    private static void LogInternal(string stage, string payload)
+    public static void Log(string context, Exception ex)
     {
         try
         {
-            var basePath = Path.Combine(AppContext.BaseDirectory, "logs");
-            Directory.CreateDirectory(basePath);
-            var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmssfff");
-            var path = Path.Combine(basePath, $"diagnostics_{timestamp}.log");
-            var lines = new[]
-            {
-                $"Stage: {stage}",
-                payload,
-                string.Empty
-            };
-            File.AppendAllLines(path, lines);
+            var path = Path.Combine(FileSystem.AppDataDirectory, "crash_log.txt");
+            var message = $"[{DateTime.Now}] CRASH in {context}: {ex}\n\n";
+            File.AppendAllText(path, message);
         }
         catch
         {
-            // ignore logging errors
+            // Fallback
         }
+    }
+
+    public static void LogInfo(string message)
+    {
+         try
+        {
+            var path = Path.Combine(FileSystem.AppDataDirectory, "crash_log.txt");
+            File.AppendAllText(path, $"[{DateTime.Now}] INFO: {message}\n");
+        }
+        catch { }
+    }
+
+    public static void Log(string context, string message)
+    {
+        LogInfo($"{context}: {message}");
     }
 }

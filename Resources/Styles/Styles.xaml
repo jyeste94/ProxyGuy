@@ -10,15 +10,46 @@
         <On Platform="iOS" Value="SF Pro Text" />
         <On Platform="Android" Value="sans-serif" />
     </OnPlatform>
+    <OnPlatform x:Key="MonospaceFont" x:TypeArguments="x:String">
+        <On Platform="WinUI" Value="Consolas" />
+        <On Platform="MacCatalyst" Value="Menlo" />
+        <On Platform="iOS" Value="Menlo" />
+        <On Platform="Android" Value="monospace" />
+    </OnPlatform>
 
     <!-- Spacing tokens -->
-    <Thickness x:Key="PanelPadding">16,16,16,16</Thickness>
-    <CornerRadius x:Key="PanelCornerRadius">8</CornerRadius>
+    <Thickness x:Key="PanelPadding">14,14,14,14</Thickness>
+    <CornerRadius x:Key="PanelCornerRadius">12</CornerRadius>
 
     <!-- Base styles -->
     <Style TargetType="ContentPage">
         <Setter Property="Background" Value="{StaticResource BaseBackgroundBrush}" />
         <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style TargetType="Entry">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource TextSecondaryColor}" />
+        <Setter Property="Background" Value="{StaticResource InputBackgroundBrush}" />
+        <Setter Property="HeightRequest" Value="38" />
+    </Style>
+
+    <Style TargetType="Editor">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
+        <Setter Property="Background" Value="{StaticResource InputBackgroundBrush}" />
+        <Setter Property="AutoSize" Value="TextChanges" />
+    </Style>
+
+    <Style TargetType="Picker">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
+        <Setter Property="Background" Value="{StaticResource InputBackgroundBrush}" />
+        <Setter Property="HeightRequest" Value="38" />
     </Style>
 
     <Style TargetType="Label" x:Key="HeadlineLabelStyle">
@@ -39,18 +70,33 @@
         <Setter Property="TextColor" Value="{StaticResource TextSecondaryColor}" />
     </Style>
 
+    <Style TargetType="Label" x:Key="SectionTitleLabelStyle" BasedOn="{StaticResource CaptionLabelStyle}">
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CharacterSpacing" Value="0.3" />
+        <Setter Property="Opacity" Value="0.85" />
+    </Style>
+
+    <Style TargetType="Editor" x:Key="CodeEditorStyle">
+        <Setter Property="FontFamily" Value="{StaticResource MonospaceFont}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
+        <Setter Property="Background" Value="{StaticResource InputBackgroundBrush}" />
+        <Setter Property="AutoSize" Value="Disabled" />
+    </Style>
+
     <!-- Panel container -->
     <Style TargetType="Border" x:Key="PanelBorderStyle">
         <Setter Property="StrokeShape">
             <Setter.Value>
-                <RoundRectangle CornerRadius="8" />
+                <RoundRectangle CornerRadius="{StaticResource PanelCornerRadius}" />
             </Setter.Value>
         </Setter>
         <Setter Property="Background" Value="{StaticResource PanelBackgroundBrush}" />
-        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="Stroke" Value="{StaticResource DividerBrush}" />
+        <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="Shadow">
             <Setter.Value>
-                <Shadow Brush="{StaticResource ShadowColor}" Offset="0,2" Radius="8" Opacity="0.2" />
+                <Shadow Brush="{StaticResource ShadowColor}" Offset="0,2" Radius="10" Opacity="0.14" />
             </Setter.Value>
         </Setter>
         <Setter Property="Padding" Value="{StaticResource PanelPadding}" />
@@ -84,6 +130,40 @@
                             <VisualState.Setters>
                                 <Setter Property="Background" Value="{StaticResource PrimaryBlueBrush}" />
                                 <Setter Property="TextColor" Value="White" />
+                                <Setter Property="Scale" Value="0.97" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Sidebar Button -->
+    <Style TargetType="Button" x:Key="SidebarButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState Name="Normal" />
+                        <VisualState Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="{StaticResource HoverBrush}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="{StaticResource PrimaryBlueSoftBrush}" />
+                                <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -96,12 +176,12 @@
     <Style TargetType="Button" x:Key="GhostButtonStyle">
         <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
         <Setter Property="FontSize" Value="13" />
-        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="CornerRadius" Value="8" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderColor" Value="{StaticResource DividerBrush}" />
         <Setter Property="BorderWidth" Value="1" />
         <Setter Property="TextColor" Value="{StaticResource TextSecondaryColor}" />
-        <Setter Property="Padding" Value="12,6" />
+        <Setter Property="Padding" Value="12,7" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <Setter.Value>
                 <VisualStateGroupList>
@@ -118,22 +198,173 @@
         </Setter>
     </Style>
 
+    <Style TargetType="Button" x:Key="PrimaryButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Background" Value="{StaticResource PrimaryBlueBrush}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="Padding" Value="14,8" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="#1D4ED8" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.98" />
+                                <Setter Property="Background" Value="#1E40AF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="SuccessButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Background" Value="{StaticResource AccentGreenBrush}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="Padding" Value="14,8" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="#15803D" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.98" />
+                                <Setter Property="Background" Value="#166534" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="DangerButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Background" Value="{StaticResource DangerBrush}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="Padding" Value="14,8" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="#B91C1C" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.98" />
+                                <Setter Property="Background" Value="#991B1B" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="DangerGhostButtonStyle" BasedOn="{StaticResource GhostButtonStyle}">
+        <Setter Property="TextColor" Value="{StaticResource DangerColor}" />
+        <Setter Property="BorderColor" Value="{StaticResource DangerSoftBorderColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="{StaticResource DangerSoftBackgroundBrush}" />
+                                <Setter Property="TextColor" Value="{StaticResource DangerColor}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Border" x:Key="InfoBannerStyle">
+        <Setter Property="Background" Value="{StaticResource InfoSoftBackgroundBrush}" />
+        <Setter Property="Stroke" Value="{StaticResource InfoSoftBorderBrush}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="12,10" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="10" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Border" x:Key="WarningBannerStyle">
+        <Setter Property="Background" Value="{StaticResource WarningSoftBackgroundBrush}" />
+        <Setter Property="Stroke" Value="{StaticResource WarningSoftBorderBrush}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="12,10" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="10" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Border" x:Key="SubtleCardStyle">
+        <Setter Property="Background" Value="{StaticResource PanelAltBackgroundBrush}" />
+        <Setter Property="Stroke" Value="{StaticResource DividerBrush}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="12,10" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="10" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Primary pill badge -->
     <Style TargetType="Border" x:Key="BadgeStyle">
         <Setter Property="StrokeShape">
             <Setter.Value>
-                <RoundRectangle CornerRadius="20" />
+                <RoundRectangle CornerRadius="14" />
             </Setter.Value>
         </Setter>
-        <Setter Property="Background" Value="{StaticResource WarningYellowBrush}" />
-        <Setter Property="Padding" Value="10,4" />
+        <Setter Property="Background" Value="{StaticResource PanelAltBackgroundBrush}" />
+        <Setter Property="Padding" Value="9,3" />
         <Setter Property="Stroke" Value="{StaticResource BadgeBorderBrush}" />
-        <Setter Property="StrokeThickness" Value="0.8" />
+        <Setter Property="StrokeThickness" Value="1" />
     </Style>
 
     <Style TargetType="Border" x:Key="InfoBadgeStyle" BasedOn="{StaticResource BadgeStyle}">
         <Setter Property="Background" Value="{StaticResource PrimaryBlueBrush}" />
         <Setter Property="Stroke" Value="{StaticResource PrimaryBlueBrush}" />
+    </Style>
+
+    <Style TargetType="Border" x:Key="CountBadgeStyle" BasedOn="{StaticResource BadgeStyle}">
+        <Setter Property="Background" Value="{StaticResource PanelAltBackgroundBrush}" />
+        <Setter Property="Stroke" Value="{StaticResource DividerBrush}" />
+        <Setter Property="Padding" Value="8,2" />
     </Style>
 
     <!-- Tab labels -->
@@ -169,7 +400,7 @@
 
     <!-- Sidebar list items -->
     <Style TargetType="Grid" x:Key="SidebarItemContainerStyle">
-        <Setter Property="Padding" Value="12,6" />
+        <Setter Property="Padding" Value="12,7" />
         <Setter Property="ColumnDefinitions">
             <Setter.Value>
                 <ColumnDefinitionCollection>
@@ -191,7 +422,7 @@
                         </VisualState>
                         <VisualState Name="Selected">
                             <VisualState.Setters>
-                                <Setter Property="Background" Value="#E6EEFF" />
+                                <Setter Property="Background" Value="{StaticResource PrimaryBlueSoftBrush}" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -203,7 +434,7 @@
     <!-- Data row template helper -->
     <Style TargetType="Grid" x:Key="DataRowGridStyle">
         <Setter Property="ColumnSpacing" Value="12" />
-        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="Padding" Value="12,9" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <Setter.Value>
@@ -217,7 +448,7 @@
                         </VisualState>
                         <VisualState Name="Selected">
                             <VisualState.Setters>
-                                <Setter Property="Background" Value="#D8E4FF" />
+                                <Setter Property="Background" Value="{StaticResource PrimaryBlueSoftBrush}" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -232,8 +463,57 @@
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="TextColor" Value="{StaticResource TextSecondaryColor}" />
+        <Setter Property="CharacterSpacing" Value="0.2" />
         <Setter Property="Margin" Value="0,0,0,8" />
     </Style>
+
+    <!-- NEW: Modern Tab Button -->
+    <Style TargetType="Button" x:Key="ModernTabStyle">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource TextSecondaryColor}" />
+        <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HeightRequest" Value="34" />
+        <Setter Property="Padding" Value="14,0" />
+        <Setter Property="CornerRadius" Value="17" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Background" Value="{StaticResource HoverBrush}" />
+                                <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Selected">
+                            <VisualState.Setters>
+                                <!-- Emulate segmented control active state -->
+                                <Setter Property="Background" Value="{StaticResource PrimaryBlueBrush}" />
+                                <Setter Property="TextColor" Value="White" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- NEW: Status Badge for Details Header -->
+    <Style TargetType="Border" x:Key="StatusBadgeStyle" BasedOn="{StaticResource BadgeStyle}">
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="8,2" />
+        <Setter Property="Background" Value="{StaticResource PanelAltBackgroundBrush}" />
+        <Setter Property="Stroke" Value="{StaticResource DividerBrush}" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="4" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
 
 

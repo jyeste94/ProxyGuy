@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ProxyGuy.ViewModels"
+             x:Class="ProxyGuy.Views.PhpIntegrationPage"
+             Title="PHP Integration">
+    
+    <ContentPage.BindingContext>
+        <vm:PhpIntegrationViewModel />
+    </ContentPage.BindingContext>
+    
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20" RowSpacing="15">
+        
+        <!-- Header -->
+        <VerticalStackLayout Spacing="10">
+            <Label Text="PHP Integration (WAMP)" Style="{StaticResource HeadlineLabelStyle}" />
+            <Label Text="Add your php.ini paths below. ProxyGuy will automatically configure them to trust the SSL Certificate when the proxy starts."
+                   Style="{StaticResource BodyLabelStyle}" />
+            <Border Style="{StaticResource WarningBannerStyle}">
+                <Label Text="IMPORTANT: Restart WAMP/Apache after adding paths or changing proxy state."
+                       TextColor="{StaticResource WarningTextColor}"
+                       FontAttributes="Bold" />
+            </Border>
+        </VerticalStackLayout>
+        
+        <!-- List -->
+        <Border Grid.Row="1" Style="{StaticResource PanelBorderStyle}" Padding="14">
+            <CollectionView ItemsSource="{Binding Manager.PhpIniPaths}">
+                <CollectionView.EmptyView>
+                    <Label Text="No paths added. Click 'Add php.ini' to start."
+                           HorizontalOptions="Center" VerticalOptions="Center" TextColor="{StaticResource TextSecondaryColor}" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource SubtleCardStyle}" Padding="10" Margin="0,0,0,8">
+                            <Grid ColumnDefinitions="*, Auto">
+                                <Label Text="{Binding .}" VerticalOptions="Center" LineBreakMode="MiddleTruncation" TextColor="{StaticResource TextPrimaryColor}" />
+                                <Button Grid.Column="1" Text="Remove"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemovePathCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Style="{StaticResource DangerGhostButtonStyle}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+        
+        <!-- Add Button -->
+        <Button Grid.Row="2" Text="+ Add php.ini File" 
+                Command="{Binding AddPathCommand}" 
+                Style="{StaticResource PrimaryButtonStyle}"
+                HeightRequest="50" />
+        
+    </Grid>
+</ContentPage>

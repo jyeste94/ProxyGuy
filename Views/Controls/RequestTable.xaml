@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProxyGuy.Views.Controls.RequestTable">
     <Border Style="{StaticResource PanelBorderStyle}" Padding="0">
-        <Grid RowDefinitions="Auto,*">
+        <Grid RowDefinitions="Auto,Auto,*">
             <!-- Column headers -->
             <Grid Padding="12,12,12,8" ColumnSpacing="12"
-                  Background="{StaticResource PanelBackgroundBrush}">
+                  Background="{StaticResource PanelAltBackgroundBrush}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60" />
                     <ColumnDefinition Width="*" />
@@ -23,7 +23,13 @@
                 <Label Grid.Column="2" Text="Method" Style="{StaticResource DataHeaderLabelStyle}" />
                 <Label Grid.Column="3" Text="Status" Style="{StaticResource DataHeaderLabelStyle}" />
                 <Label Grid.Column="4" Text="Code" Style="{StaticResource DataHeaderLabelStyle}" />
-                <Label Grid.Column="5" Text="Time" Style="{StaticResource DataHeaderLabelStyle}" />
+                <Label Grid.Column="5" Text="Time" Style="{StaticResource DataHeaderLabelStyle}">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsVeryCompactLayout}" Value="True">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
                 <Label Grid.Column="6" Text="Duration" Style="{StaticResource DataHeaderLabelStyle}">
                     <Label.Triggers>
                         <DataTrigger TargetType="Label" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsCompactLayout}" Value="True">
@@ -38,91 +44,225 @@
                         </DataTrigger>
                     </Label.Triggers>
                 </Label>
-                <Label Grid.Column="8" Text="Guardar" Style="{StaticResource DataHeaderLabelStyle}" />
+                <Label Grid.Column="8" Text="Guardar" Style="{StaticResource DataHeaderLabelStyle}">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsVeryCompactLayout}" Value="True">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
             </Grid>
+            <BoxView HeightRequest="1" Color="{StaticResource DividerColor}" VerticalOptions="End" />
+
+            <!-- Filters -->
+            <Grid Grid.Row="1" Padding="12,8,12,10" ColumnSpacing="12" ColumnDefinitions="*,Auto,Auto,Auto,Auto,Auto">
+                <StackLayout Orientation="Vertical" Spacing="2">
+                    <Label Text="URL Filter"
+                           Style="{StaticResource SectionTitleLabelStyle}" />
+                    <Entry Text="{Binding UrlFilter, Mode=TwoWay}"
+                           Placeholder="url contains / regex..."
+                           TextColor="{StaticResource TextSecondaryColor}" />
+                </StackLayout>
+                <StackLayout Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalOptions="Center">
+                    <Label Text="Regex" Style="{StaticResource CaptionLabelStyle}" />
+                    <Switch IsToggled="{Binding UseRegexFilter, Mode=TwoWay}" />
+                </StackLayout>
+
+                <VerticalStackLayout Grid.Column="2" Spacing="2">
+                    <VerticalStackLayout.Triggers>
+                        <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsVeryCompactLayout}" Value="True">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </VerticalStackLayout.Triggers>
+                    <Label Text="Content-Type"
+                           Style="{StaticResource SectionTitleLabelStyle}" />
+                    <Entry Text="{Binding ContentTypeFilter, Mode=TwoWay}"
+                           Placeholder="json, html..."
+                           WidthRequest="150" />
+                </VerticalStackLayout>
+
+                <Label Grid.Column="3"
+                       Text="Usa !prefijo para excluir"
+                       Style="{StaticResource CaptionLabelStyle}"
+                       VerticalOptions="Center"
+                       TextColor="{StaticResource TextSecondaryColor}">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsVeryCompactLayout}" Value="True">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+                <VerticalStackLayout Grid.Column="4" Spacing="2">
+                    <VerticalStackLayout.Triggers>
+                        <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsVeryCompactLayout}" Value="True">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </VerticalStackLayout.Triggers>
+                    <Label Text="Time"
+                           Style="{StaticResource SectionTitleLabelStyle}" />
+                    <Picker ItemsSource="{Binding TimeRangeOptions}"
+                            SelectedItem="{Binding SelectedTimeRange, Mode=TwoWay}"
+                            WidthRequest="120" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="5" Spacing="2">
+                    <VerticalStackLayout.Triggers>
+                        <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsVeryCompactLayout}" Value="True">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </VerticalStackLayout.Triggers>
+                    <Label Text="Size KB"
+                           Style="{StaticResource SectionTitleLabelStyle}" />
+                    <HorizontalStackLayout Spacing="4">
+                        <Entry Placeholder="Min" WidthRequest="58" Keyboard="Numeric" Text="{Binding MinResponseKb, Mode=TwoWay}" />
+                        <Entry Placeholder="Max" WidthRequest="58" Keyboard="Numeric" Text="{Binding MaxResponseKb, Mode=TwoWay}" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Grid>
+            <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource DividerColor}" VerticalOptions="End" />
 
             <!-- Data rows -->
-            <CollectionView Grid.Row="1"
+            <CollectionView Grid.Row="2"
                             ItemsSource="{Binding VisibleRequests}"
                             SelectionMode="Single"
                             SelectedItem="{Binding CurrentRequest, Mode=TwoWay}"
                             x:Name="RequestsCollection"
-                            BackgroundColor="Transparent">
+                            BackgroundColor="Transparent"
+                            ItemSizingStrategy="MeasureFirstItem"
+                            ItemsUpdatingScrollMode="KeepScrollOffset"
+                            RemainingItemsThreshold="20"
+                            RemainingItemsThresholdReachedCommand="{Binding LoadMoreRequestsCommand}">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout Spacing="10" Padding="0,24" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text="&#xE8A5;"
+                               FontFamily="Segoe MDL2 Assets"
+                               FontSize="30"
+                               TextColor="{StaticResource DividerColor}"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="No hay peticiones para mostrar"
+                               FontFamily="{StaticResource PrimaryFont}"
+                               FontSize="14"
+                               TextColor="{StaticResource TextSecondaryColor}"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="Prueba a limpiar filtros o generar tráfico"
+                               Style="{StaticResource CaptionLabelStyle}"
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="0" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnSpacing="12" Style="{StaticResource DataRowGridStyle}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="60" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="80" />
-                                <ColumnDefinition Width="120" />
-                                <ColumnDefinition Width="110" />
-                                <ColumnDefinition Width="120" />
-                                <ColumnDefinition Width="140" />
-                            </Grid.ColumnDefinitions>
-
-                            <Label Grid.Column="0" Text="{Binding Id}" FontFamily="{StaticResource PrimaryFont}" FontSize="13" />
-
-                            <HorizontalStackLayout Grid.Column="1" Spacing="8">
-                                <Ellipse WidthRequest="8" HeightRequest="8" Fill="{StaticResource WarningYellowBrush}" VerticalOptions="Center" />
-                                <Label Text="{Binding Url}" FontFamily="{StaticResource PrimaryFont}" FontSize="13" LineBreakMode="TailTruncation" />
-                            </HorizontalStackLayout>
-
-                            <Label Grid.Column="2" Text="{Binding Method}" FontFamily="{StaticResource PrimaryFont}" FontSize="13" />
-
-                            <Label Grid.Column="3" Text="{Binding Status}" FontFamily="{StaticResource PrimaryFont}" FontSize="13" />
-
-                            <Label Grid.Column="4" Text="{Binding Code}" FontFamily="{StaticResource PrimaryFont}" FontSize="13" />
-
-                            <Label Grid.Column="5" Text="{Binding Time, StringFormat='{0:HH:mm:ss}'}" FontFamily="{StaticResource PrimaryFont}" FontSize="13" />
-
-                            <Label Grid.Column="6" Text="{Binding Duration}" FontFamily="{StaticResource PrimaryFont}" FontSize="13">
-                                <Label.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsCompactLayout}" Value="True">
-                                        <Setter Property="IsVisible" Value="False" />
+                        <Grid RowDefinitions="Auto,1">
+                            <Grid Grid.Row="0" ColumnSpacing="12" Style="{StaticResource DataRowGridStyle}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="140" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.Triggers>
+                                    <DataTrigger TargetType="Grid" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsDenseRows}" Value="True">
+                                        <Setter Property="Padding" Value="10,5" />
                                     </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
+                                </Grid.Triggers>
 
-                            <Border Grid.Column="7" Style="{StaticResource BadgeStyle}" Background="Transparent" StrokeThickness="1">
-                                <Border.Triggers>
-                                    <DataTrigger TargetType="Border" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsCompactLayout}" Value="True">
-                                        <Setter Property="IsVisible" Value="False" />
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Border" Binding="{Binding RequestLabel}" Value="">
-                                        <Setter Property="IsVisible" Value="False" />
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="True">
-                                        <Setter Property="Background" Value="{StaticResource PrimaryBlueBrush}" />
-                                        <Setter Property="Stroke" Value="{StaticResource PrimaryBlueBrush}" />
-                                    </DataTrigger>
-                                </Border.Triggers>
-                                <Label Text="{Binding RequestLabel}"
-                                       FontSize="12"
-                                       FontFamily="{StaticResource PrimaryFont}"
-                                       TextColor="Black">
+                                <Label Grid.Column="0" Text="{Binding Id}" FontFamily="{StaticResource PrimaryFont}" FontSize="13" />
+
+                                <HorizontalStackLayout Grid.Column="1" Spacing="8">
+                                    <Ellipse WidthRequest="7" HeightRequest="7" Fill="{StaticResource PrimaryBlueBrush}" VerticalOptions="Center">
+                                        <Ellipse.Triggers>
+                                            <DataTrigger TargetType="Ellipse" Binding="{Binding IsActive}" Value="False">
+                                                <Setter Property="Fill" Value="{StaticResource DividerBrush}" />
+                                            </DataTrigger>
+                                        </Ellipse.Triggers>
+                                    </Ellipse>
+                                    <Label Text="{Binding Url}" FontFamily="{StaticResource PrimaryFont}" FontSize="13" LineBreakMode="TailTruncation" />
+                                </HorizontalStackLayout>
+
+                                <Label Grid.Column="2" Text="{Binding Method}" FontFamily="{StaticResource PrimaryFont}" FontSize="13" />
+
+                                <Label Grid.Column="3" Text="{Binding Status}" FontFamily="{StaticResource PrimaryFont}" FontSize="13" />
+
+                                <Label Grid.Column="4" Text="{Binding Code}" FontFamily="{StaticResource PrimaryFont}" FontSize="13" />
+
+                                <Label Grid.Column="5" Text="{Binding Time, StringFormat='{0:HH:mm:ss}'}" FontFamily="{StaticResource PrimaryFont}" FontSize="13">
                                     <Label.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsActive}" Value="True">
-                                            <Setter Property="TextColor" Value="White" />
-                                            <Setter Property="FontAttributes" Value="Bold" />
+                                        <DataTrigger TargetType="Label" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsVeryCompactLayout}" Value="True">
+                                            <Setter Property="IsVisible" Value="False" />
                                         </DataTrigger>
                                     </Label.Triggers>
                                 </Label>
-                            </Border>
 
-                            <Button Grid.Column="8"
-                                    Text="Guardar"
-                                    Style="{StaticResource GhostButtonStyle}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SaveRequestCommand}"
-                                    CommandParameter="{Binding}" />
+                                <Label Grid.Column="6" Text="{Binding Duration}" FontFamily="{StaticResource PrimaryFont}" FontSize="13">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsCompactLayout}" Value="True">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+
+                                <Border Grid.Column="7" Style="{StaticResource BadgeStyle}" Background="Transparent" StrokeThickness="1">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsCompactLayout}" Value="True">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding RequestLabel}" Value="">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsActive}" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource PrimaryBlueBrush}" />
+                                            <Setter Property="Stroke" Value="{StaticResource PrimaryBlueBrush}" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding RequestLabel, Converter={StaticResource StringContainsConverter}, ConverterParameter='ERR'}" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource DangerSoftBackgroundBrush}" />
+                                            <Setter Property="Stroke" Value="{StaticResource DangerSoftBorderBrush}" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Label Text="{Binding RequestLabel}"
+                                           FontSize="12"
+                                           FontFamily="{StaticResource PrimaryFont}"
+                                           TextColor="{StaticResource TextPrimaryColor}">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsActive}" Value="True">
+                                                <Setter Property="TextColor" Value="White" />
+                                                <Setter Property="FontAttributes" Value="Bold" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </Border>
+
+                                <Button Grid.Column="8"
+                                        Text="Guardar"
+                                        Style="{StaticResource GhostButtonStyle}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SaveRequestCommand}"
+                                        CommandParameter="{Binding}">
+                                    <Button.Triggers>
+                                        <DataTrigger TargetType="Button" Binding="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsVeryCompactLayout}" Value="True">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </Button.Triggers>
+                                </Button>
+                            </Grid>
+                            <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource DividerColor}" Opacity="0.55" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+                <CollectionView.FooterTemplate>
+                    <DataTemplate>
+                        <Grid Padding="0,8" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.HasMoreItems}">
+                            <Button Text="Cargar más"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.LoadMoreRequestsCommand}"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    HorizontalOptions="Center" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.FooterTemplate>
             </CollectionView>
         </Grid>
     </Border>

@@ -2,19 +2,78 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProxyGuy.Views.Controls.StatusBar">
-    <Border Background="{StaticResource PanelBackgroundBrush}" StrokeThickness="0" Padding="16,6">
-        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="16" VerticalOptions="Center">
+    <Border Background="{StaticResource PanelAltBackgroundBrush}"
+            Stroke="{StaticResource DividerBrush}"
+            StrokeThickness="1"
+            Padding="12,8">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="10" />
+        </Border.StrokeShape>
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14" VerticalOptions="Center">
             <HorizontalStackLayout Spacing="8">
                 <Button Text="Clear" Style="{StaticResource GhostButtonStyle}" Command="{Binding ClearCommand}" />
-                <Button Text="Filter" Style="{StaticResource GhostButtonStyle}" />
-                <Button Text="Auto Select" Style="{StaticResource GhostButtonStyle}" />
+                <Button Text="{Binding RowDensityText}" Style="{StaticResource GhostButtonStyle}" Command="{Binding ToggleRowDensityCommand}" />
+                <Button Text="Export HAR" Style="{StaticResource GhostButtonStyle}" Command="{Binding SaveSessionHarCommand}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsVeryCompactLayout}" Value="True">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Text="Postman" Style="{StaticResource GhostButtonStyle}" Command="{Binding SaveSessionPostmanCommand}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsVeryCompactLayout}" Value="True">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Text="Replay" Style="{StaticResource GhostButtonStyle}" Command="{Binding OpenComposerCommand}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsVeryCompactLayout}" Value="True">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Text="Copy cURL" Style="{StaticResource GhostButtonStyle}" Command="{Binding CopyCurlCommand}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsVeryCompactLayout}" Value="True">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
             </HorizontalStackLayout>
 
-            <Label Grid.Column="1" Text="{Binding StatusSummary}" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="{StaticResource PrimaryFont}" FontSize="13" />
+            <Label Grid.Column="1"
+                   Text="{Binding StatusSummary}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   FontFamily="{StaticResource PrimaryFont}"
+                   FontSize="13"
+                   TextColor="{StaticResource TextSecondaryColor}" />
 
-            <Border Grid.Column="2" Style="{StaticResource BadgeStyle}" Background="{StaticResource PrimaryBlueBrush}" StrokeThickness="0">
-                <Label Text="Proxy Overridden" TextColor="White" FontSize="12" FontAttributes="Bold" />
-            </Border>
+            <HorizontalStackLayout Grid.Column="2" Spacing="8" VerticalOptions="Center">
+                <Border Style="{StaticResource CountBadgeStyle}" Background="{StaticResource PrimaryBlueSoftBrush}">
+                    <Label Text="{Binding ThrottleManager.CurrentProfile.Name}"
+                           FontSize="12"
+                           TextColor="{StaticResource PrimaryBlueColor}"
+                           LineBreakMode="TailTruncation"
+                           MaxLines="1" />
+                </Border>
+                <Ellipse WidthRequest="8" HeightRequest="8" Fill="{StaticResource AccentGreenBrush}">
+                    <Ellipse.Triggers>
+                        <DataTrigger TargetType="Ellipse" Binding="{Binding IsListening}" Value="False">
+                            <Setter Property="Fill" Value="{StaticResource DangerBrush}" />
+                        </DataTrigger>
+                    </Ellipse.Triggers>
+                </Ellipse>
+                <Border Style="{StaticResource CountBadgeStyle}">
+                    <Label Text="{Binding ListeningStatusText}"
+                           FontSize="12"
+                           TextColor="{StaticResource TextPrimaryColor}"
+                           LineBreakMode="TailTruncation"
+                           MaxLines="1" />
+                </Border>
+            </HorizontalStackLayout>
         </Grid>
     </Border>
 </ContentView>

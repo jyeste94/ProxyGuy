@@ -11,4 +11,24 @@
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
+    <ShellContent
+        ContentTemplate="{DataTemplate local:Views.CertificatePage}"
+        Route="CertificatePage" />
+
+    <ShellContent
+        ContentTemplate="{DataTemplate local:Views.MapLocalPage}"
+        Route="MapLocalPage" />
+
+    <ShellContent
+        ContentTemplate="{DataTemplate local:Views.SslProxyingPage}"
+        Route="SslProxyingPage" />
+
+    <ShellContent
+        ContentTemplate="{DataTemplate local:Views.BreakpointPage}"
+        Route="BreakpointPage" />
+
+    <ShellContent
+        ContentTemplate="{DataTemplate local:Views.PhpIntegrationPage}"
+        Route="PhpIntegrationPage" />
+
 </Shell>

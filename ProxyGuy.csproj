@@ -1,7 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+    <!-- Default to desktop target on each host OS to avoid forcing mobile workloads. -->
+    <TargetFrameworks>net8.0-maccatalyst</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">net8.0-windows10.0.19041.0</TargetFrameworks>
+    <BuildMobileTargets Condition="'$(BuildMobileTargets)' == ''">false</BuildMobileTargets>
+    <TargetFrameworks Condition="'$(BuildMobileTargets)' == 'true'">$(TargetFrameworks);net8.0-android;net8.0-ios</TargetFrameworks>
+    <DefaultItemExcludes>$(DefaultItemExcludes);obj_stable\**</DefaultItemExcludes>
     <OutputType>Exe</OutputType>
     <RootNamespace>ProxyGuy</RootNamespace>
     <UseMaui>true</UseMaui>
@@ -31,8 +35,8 @@
     <EnableResizetizerWorkerConcurrency>false</EnableResizetizerWorkerConcurrency>
   </PropertyGroup>
   <ItemGroup>
-    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
-    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#2563EB" />
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#2563EB" BaseSize="128,128" />
     <MauiImage Include="Resources\Images\*" />
     <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
     <MauiFont Include="Resources\Fonts\*" />

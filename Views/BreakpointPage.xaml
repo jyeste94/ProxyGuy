@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ProxyGuy.ViewModels"
+             x:Class="ProxyGuy.Views.BreakpointPage"
+             Title="Breakpoints">
+    <ContentPage.BindingContext>
+        <vm:BreakpointViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto,*">
+        <Border Grid.Row="0" Margin="16,16,16,0" Style="{StaticResource WarningBannerStyle}">
+            <Label Text="Breakpoints pausan la solicitud antes de enviarla. Edita el body y pulsa Resume o Abort."
+                   TextColor="{StaticResource WarningTextColor}"
+                   FontSize="13" />
+        </Border>
+
+        <Grid Grid.Row="1" ColumnDefinitions="300,*" ColumnSpacing="0" Margin="16,12,16,16">
+        <!-- LEFT: Rules List -->
+        <Grid Grid.Column="0" RowDefinitions="Auto,Auto,*" Background="{StaticResource PanelAltBackgroundBrush}">
+             <Label Text="Rules" Style="{StaticResource HeadlineLabelStyle}" Margin="16,16,16,8"/>
+             
+             <!-- Add Rule -->
+             <Grid Grid.Row="1" ColumnDefinitions="*,Auto" Padding="16,0,16,16" ColumnSpacing="8">
+                 <Entry Text="{Binding NewPattern}" Placeholder="e.g. *api/v1*" />
+                 <Button Grid.Column="1" Text="+" Command="{Binding AddRuleCommand}" WidthRequest="40" Style="{StaticResource GhostButtonStyle}"/>
+             </Grid>
+
+             <CollectionView Grid.Row="2" ItemsSource="{Binding Rules}" SelectionMode="None">
+                 <CollectionView.ItemTemplate>
+                     <DataTemplate>
+                         <Grid Padding="16,8" ColumnDefinitions="*,Auto">
+                            <Label Text="{Binding UrlPattern}" VerticalOptions="Center"/>
+                            <Button Grid.Column="1" Text="&#xE711;" FontFamily="Segoe MDL2 Assets" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveRuleCommand}"
+                                    CommandParameter="{Binding}"
+                                    Style="{StaticResource DangerGhostButtonStyle}" FontSize="12"/>
+                         </Grid>
+                     </DataTemplate>
+                 </CollectionView.ItemTemplate>
+             </CollectionView>
+             
+             <BoxView Grid.Row="0" Grid.RowSpan="3" HorizontalOptions="End" WidthRequest="1" Color="{StaticResource DividerColor}" />
+        </Grid>
+
+        <!-- RIGHT: Active Paused Session -->
+        <Grid Grid.Column="1" RowDefinitions="Auto,*">
+             <!-- Active List (Horizontal Tabs-like if multiple?) or just List -->
+             <!-- For simplicity, let's show a list of paused sessions at top, and editor below -->
+             <CollectionView Grid.Row="0" ItemsSource="{Binding PausedSessions}" 
+                             SelectionMode="Single" 
+                             SelectedItem="{Binding SelectedSession}"
+                             HeightRequest="150"
+                             Background="{StaticResource PanelAltBackgroundBrush}">
+                <CollectionView.Header>
+                     <Label Text="Paused Requests (Select to Edit)" Style="{StaticResource SectionTitleLabelStyle}" Margin="16,8"/>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="16,8" ColumnDefinitions="Auto,*,Auto">
+                             <Label Text="{Binding Method}" FontAttributes="Bold" Margin="0,0,8,0"/>
+                             <Label Grid.Column="1" Text="{Binding Url}" LineBreakMode="TailTruncation"/>
+                             <Label Grid.Column="2" Text="PAUSED" TextColor="{StaticResource WarningTextColor}" FontAttributes="Bold"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+             </CollectionView>
+
+             <!-- Editor Area -->
+             <Grid Grid.Row="1" Padding="16">
+                 <Grid.Triggers>
+                     <DataTrigger TargetType="Grid" Binding="{Binding SelectedSession}" Value="{x:Null}">
+                         <Setter Property="IsVisible" Value="False" />
+                     </DataTrigger>
+                 </Grid.Triggers>
+                 
+                 <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12">
+                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                         <Label Text="Request Body Editor" Style="{StaticResource HeadlineLabelStyle}"/>
+                         
+                         <HorizontalStackLayout Grid.Column="1" Spacing="12">
+                             <Button Text="Abort" Command="{Binding AbortCommand}" Style="{StaticResource DangerButtonStyle}" />
+                             <Button Text="Resume" Command="{Binding ResumeCommand}" Style="{StaticResource PrimaryButtonStyle}"/>
+                         </HorizontalStackLayout>
+                     </Grid>
+
+                     <Editor Grid.Row="1" 
+                             Text="{Binding SelectedSession.RequestBody}" 
+                             Style="{StaticResource CodeEditorStyle}"
+                             />
+                 </Grid>
+             </Grid>
+             
+             <!-- Placeholder -->
+            <VerticalStackLayout Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="12" IsVisible="False">
+                 <VerticalStackLayout.Triggers>
+                     <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding SelectedSession}" Value="{x:Null}">
+                         <Setter Property="IsVisible" Value="True" />
+                     </DataTrigger>
+                 </VerticalStackLayout.Triggers>
+                 <Label Text="Select a paused request to edit"
+                        Style="{StaticResource BodyLabelStyle}" />
+            </VerticalStackLayout>
+        </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

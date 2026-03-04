@@ -3,28 +3,58 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <!-- Core palette -->
-    <Color x:Key="BaseBackgroundColor">#F5F6F8</Color>
+    <Color x:Key="BaseBackgroundColor">#F3F5F9</Color>
     <Color x:Key="PanelBackgroundColor">#FFFFFF</Color>
-    <Color x:Key="PrimaryBlueColor">#2F6BFF</Color>
-    <Color x:Key="WarningYellowColor">#FFC107</Color>
-    <Color x:Key="AccentGreenColor">#2ECC71</Color>
-    <Color x:Key="TextPrimaryColor">#1F2937</Color>
-    <Color x:Key="TextSecondaryColor">#4B5563</Color>
-    <Color x:Key="DividerColor">#E5E7EB</Color>
-    <Color x:Key="HoverColor">#EEF3FF</Color>
-    <Color x:Key="BadgeBorderColor">#1E1E1E</Color>
-    <Color x:Key="ShadowColor">#1A000000</Color>
+    <Color x:Key="PanelAltBackgroundColor">#F8FAFC</Color>
+    <Color x:Key="InputBackgroundColor">#F6F8FB</Color>
+    <Color x:Key="PrimaryBlueColor">#2563EB</Color>
+    <Color x:Key="PrimaryBlueSoftColor">#DBEAFE</Color>
+    <Color x:Key="WarningYellowColor">#F6C343</Color>
+    <Color x:Key="AccentGreenColor">#16A34A</Color>
+    <Color x:Key="DangerColor">#DC2626</Color>
+    <Color x:Key="DangerSoftBackgroundColor">#FEE2E2</Color>
+    <Color x:Key="DangerSoftBorderColor">#FECACA</Color>
+    <Color x:Key="SuccessSoftBackgroundColor">#DCFCE7</Color>
+    <Color x:Key="SuccessSoftBorderColor">#BBF7D0</Color>
+    <Color x:Key="InfoSoftBackgroundColor">#E0F2FE</Color>
+    <Color x:Key="InfoSoftBorderColor">#BAE6FD</Color>
+    <Color x:Key="InfoTextColor">#0C4A6E</Color>
+    <Color x:Key="WarningSoftBackgroundColor">#FEF3C7</Color>
+    <Color x:Key="WarningSoftBorderColor">#FDE68A</Color>
+    <Color x:Key="WarningTextColor">#92400E</Color>
+    <Color x:Key="TextPrimaryColor">#111827</Color>
+    <Color x:Key="TextSecondaryColor">#6B7280</Color>
+    <Color x:Key="DividerColor">#E2E8F0</Color>
+    <Color x:Key="HoverColor">#EEF2FF</Color>
+    <Color x:Key="BadgeBorderColor">#D1D5DB</Color>
+    <Color x:Key="ShadowColor">#12000000</Color>
+    <Color x:Key="OverlayScrimColor">#7F0F172A</Color>
 
     <!-- Brushes -->
     <SolidColorBrush x:Key="BaseBackgroundBrush" Color="{StaticResource BaseBackgroundColor}" />
     <SolidColorBrush x:Key="PanelBackgroundBrush" Color="{StaticResource PanelBackgroundColor}" />
+    <SolidColorBrush x:Key="PanelAltBackgroundBrush" Color="{StaticResource PanelAltBackgroundColor}" />
+    <SolidColorBrush x:Key="InputBackgroundBrush" Color="{StaticResource InputBackgroundColor}" />
     <SolidColorBrush x:Key="PrimaryBlueBrush" Color="{StaticResource PrimaryBlueColor}" />
+    <SolidColorBrush x:Key="PrimaryBlueSoftBrush" Color="{StaticResource PrimaryBlueSoftColor}" />
     <SolidColorBrush x:Key="WarningYellowBrush" Color="{StaticResource WarningYellowColor}" />
     <SolidColorBrush x:Key="AccentGreenBrush" Color="{StaticResource AccentGreenColor}" />
+    <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}" />
+    <SolidColorBrush x:Key="DangerSoftBackgroundBrush" Color="{StaticResource DangerSoftBackgroundColor}" />
+    <SolidColorBrush x:Key="DangerSoftBorderBrush" Color="{StaticResource DangerSoftBorderColor}" />
+    <SolidColorBrush x:Key="SuccessSoftBackgroundBrush" Color="{StaticResource SuccessSoftBackgroundColor}" />
+    <SolidColorBrush x:Key="SuccessSoftBorderBrush" Color="{StaticResource SuccessSoftBorderColor}" />
+    <SolidColorBrush x:Key="InfoSoftBackgroundBrush" Color="{StaticResource InfoSoftBackgroundColor}" />
+    <SolidColorBrush x:Key="InfoSoftBorderBrush" Color="{StaticResource InfoSoftBorderColor}" />
+    <SolidColorBrush x:Key="InfoTextBrush" Color="{StaticResource InfoTextColor}" />
+    <SolidColorBrush x:Key="WarningSoftBackgroundBrush" Color="{StaticResource WarningSoftBackgroundColor}" />
+    <SolidColorBrush x:Key="WarningSoftBorderBrush" Color="{StaticResource WarningSoftBorderColor}" />
+    <SolidColorBrush x:Key="WarningTextBrush" Color="{StaticResource WarningTextColor}" />
     <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}" />
     <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}" />
     <SolidColorBrush x:Key="DividerBrush" Color="{StaticResource DividerColor}" />
     <SolidColorBrush x:Key="HoverBrush" Color="{StaticResource HoverColor}" />
     <SolidColorBrush x:Key="BadgeBorderBrush" Color="{StaticResource BadgeBorderColor}" />
+    <SolidColorBrush x:Key="OverlayScrimBrush" Color="{StaticResource OverlayScrimColor}" />
 </ResourceDictionary>
 
